@@ -5,3 +5,11 @@
 .settings/org.eclipse.jdt.core.prefs -text
 .settings/org.eclipse.m2e.core.prefs -text
 /pom.xml -text
+src/main/java/org/gcube/accounting/analytics/Filter.java -text
+src/main/java/org/gcube/accounting/analytics/Info.java -text
+src/main/java/org/gcube/accounting/analytics/ResourceRecordQuery.java -text
+src/main/java/org/gcube/accounting/analytics/ResourceRecordQueryFactory.java -text
+src/main/java/org/gcube/accounting/analytics/TemporalConstraint.java -text
+src/main/java/org/gcube/accounting/analytics/exception/NoAvailableScopeException.java -text
+src/main/java/org/gcube/accounting/analytics/exception/NoUsableAccountingPersistenceQueryFound.java -text
+src/main/java/org/gcube/accounting/analytics/persistence/AccountingPersistenceQuery.java -text
