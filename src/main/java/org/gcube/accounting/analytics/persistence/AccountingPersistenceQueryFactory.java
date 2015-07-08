@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.gcube.accounting.analytics;
+package org.gcube.accounting.analytics.persistence;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,7 +9,6 @@ import java.util.ServiceLoader;
 
 import org.gcube.accounting.analytics.exception.NoAvailableScopeException;
 import org.gcube.accounting.analytics.exception.NoUsableAccountingPersistenceQueryFound;
-import org.gcube.accounting.analytics.persistence.AccountingPersistenceQuery;
 import org.gcube.common.scope.api.ScopeProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,24 +16,24 @@ import org.slf4j.LoggerFactory;
 /**
  * @author Luca Frosini (ISTI - CNR) http://www.lucafrosini.com/
  */
-public abstract class ResourceRecordQueryFactory {
+public abstract class AccountingPersistenceQueryFactory {
 
-	private static Logger logger = LoggerFactory.getLogger(ResourceRecordQueryFactory.class);
+	private static Logger logger = LoggerFactory.getLogger(AccountingPersistenceQueryFactory.class);
 	
-	private static Map<String, ResourceRecordQuery> resourceRecordQueries;
+	private static Map<String, AccountingPersistenceQuery> accountingPersistenceQueries;
 	
 	static {
-		resourceRecordQueries = new HashMap<String, ResourceRecordQuery>();
+		accountingPersistenceQueries = new HashMap<String, AccountingPersistenceQuery>();
 	}
 	
-	public synchronized static ResourceRecordQuery getInstance() throws NoAvailableScopeException, NoUsableAccountingPersistenceQueryFound {
+	public synchronized static AccountingPersistenceQuery getInstance() throws NoAvailableScopeException, NoUsableAccountingPersistenceQueryFound {
 		String scope = ScopeProvider.instance.get();
 		if(scope==null){
 			new NoAvailableScopeException();
 		}
 		
-		ResourceRecordQuery resourceRecordQuery = resourceRecordQueries.get(scope);
-		if(resourceRecordQuery==null){
+		AccountingPersistenceQuery accountingPersistenceQuery = accountingPersistenceQueries.get(scope);
+		if(accountingPersistenceQuery==null){
 		
 			try {
 				ServiceLoader<AccountingPersistenceQuery> serviceLoader = ServiceLoader.load(AccountingPersistenceQuery.class);
@@ -43,11 +42,9 @@ public abstract class ResourceRecordQueryFactory {
 						String foundClassName = found.getClass().getSimpleName();
 						logger.debug("Testing {}", foundClassName);
 						
-						//AccountingPersistenceQueryConfiguration configuration = AccountingPersistenceQueryConfiguration.getConfiguration(foundClassName);
-						//found.prepareConnection(configuration);
-
-						resourceRecordQuery = new ResourceRecordQuery(found);
-						
+						AccountingPersistenceQueryConfiguration configuration = new AccountingPersistenceQueryConfiguration(foundClassName);
+						found.prepareConnection(configuration);
+						accountingPersistenceQuery = found;
 						break;
 					} catch (Exception e) {
 						logger.debug(String.format("%s not initialized correctly. It will not be used", found.getClass().getSimpleName()));
@@ -57,18 +54,18 @@ public abstract class ResourceRecordQueryFactory {
 				throw new NoUsableAccountingPersistenceQueryFound();
 			}
 			
-			if(resourceRecordQuery==null){
+			if(accountingPersistenceQuery==null){
 				throw new NoUsableAccountingPersistenceQueryFound();
 			}
 			
-			resourceRecordQueries.put(scope, resourceRecordQuery);
+			accountingPersistenceQueries.put(scope, accountingPersistenceQuery);
 		}
 		
-		return resourceRecordQuery;
+		return accountingPersistenceQuery;
 	}
 
 	
-	protected ResourceRecordQueryFactory(){
+	protected AccountingPersistenceQueryFactory(){
 		
 	}
 
