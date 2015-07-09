@@ -8,7 +8,7 @@ import java.util.List;
 import org.gcube.accounting.analytics.Filter;
 import org.gcube.accounting.analytics.Info;
 import org.gcube.accounting.analytics.TemporalConstraint;
-import org.gcube.accounting.datamodel.UsageRecord;
+import org.gcube.accounting.datamodel.SingleUsageRecord;
 
 /**
  * @author Luca Frosini (ISTI - CNR) http://www.lucafrosini.com/
@@ -18,10 +18,10 @@ public abstract class AccountingPersistenceQuery {
 	
 	protected abstract void prepareConnection(AccountingPersistenceQueryConfiguration configuration) throws Exception;
 	
-	protected abstract List<Info> reallyQuery(Class<? extends UsageRecord> usageRecordType, 
+	protected abstract List<Info> reallyQuery(Class<? extends SingleUsageRecord> usageRecordType, 
 			TemporalConstraint temporalConstraint, List<Filter> filters) throws Exception;
 	
-	public List<Info> query(Class<? extends UsageRecord> usageRecordType, 
+	public List<Info> query(Class<? extends SingleUsageRecord> usageRecordType, 
 			TemporalConstraint temporalConstraint, List<Filter> filters) throws Exception{
 		return reallyQuery(usageRecordType, temporalConstraint, filters);
 	}
