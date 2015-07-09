@@ -20,8 +20,8 @@ public class ResourceRecordQuery {
 	}
 	
 	public List<Info> getInfo(Class<? extends UsageRecord> usageRecordType, 
-			TemporalConstraint temporalConstraint, List<Filter> filters){
-		return null;
+			TemporalConstraint temporalConstraint, List<Filter> filters) throws Exception{
+		return accountingPersistenceQuery.query(usageRecordType, temporalConstraint, filters);
 	}
 	
 }
