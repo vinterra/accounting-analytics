@@ -8,9 +8,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.gcube.accounting.analytics.exception.NoAvailableScopeException;
+import org.gcube.accounting.analytics.exception.NoUsableAccountingPersistenceQueryFound;
 import org.gcube.accounting.analytics.persistence.AccountingPersistenceQuery;
+import org.gcube.accounting.analytics.persistence.AccountingPersistenceQueryFactory;
 import org.gcube.accounting.datamodel.SingleUsageRecord;
 import org.gcube.accounting.datamodel.usagerecords.ServiceUsageRecord;
+import org.gcube.common.scope.api.ScopeProvider;
 import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,14 +50,22 @@ public class ResourceRecordQuery {
 	
 	protected AccountingPersistenceQuery accountingPersistenceQuery;
 	
-	protected ResourceRecordQuery(AccountingPersistenceQuery accountingPersistenceQuery){
-		this.accountingPersistenceQuery = accountingPersistenceQuery;
+	public ResourceRecordQuery() throws NoAvailableScopeException, NoUsableAccountingPersistenceQueryFound {
+		this.accountingPersistenceQuery = AccountingPersistenceQueryFactory.getInstance();
+	}
+	
+	public ResourceRecordQuery(String scope) throws NoAvailableScopeException, NoUsableAccountingPersistenceQueryFound {
+		ScopeProvider.instance.set(scope);
+		this.accountingPersistenceQuery = AccountingPersistenceQueryFactory.getInstance();
 	}
 	
 	public List<Info> getInfo(Class<? extends SingleUsageRecord> usageRecordType, 
 			TemporalConstraint temporalConstraint, List<Filter> filters) throws Exception{
 		return accountingPersistenceQuery.query(usageRecordType, temporalConstraint, filters);
 	}
+	
+	
+	
 	
 	
 	
