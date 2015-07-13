@@ -15,8 +15,6 @@ src/main/java/org/gcube/accounting/analytics/exception/NoUsableAccountingPersist
 src/main/java/org/gcube/accounting/analytics/persistence/AccountingPersistenceQuery.java -text
 src/main/java/org/gcube/accounting/analytics/persistence/AccountingPersistenceQueryConfiguration.java -text
 src/main/java/org/gcube/accounting/analytics/persistence/AccountingPersistenceQueryFactory.java -text
-src/main/resources/ServiceUsageRecord.js -text
-src/main/resources/StorageUsageRecord.js -text
 src/test/java/org/gcube/accounting/analytics/ResourceRecordQueryTest.java -text
 src/test/resources/devNext.gcubekey -text
 src/test/resources/devsec.gcubekey -text
