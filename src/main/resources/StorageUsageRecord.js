@@ -1,6 +1,5 @@
 {
    "_id": "_design/StorageUsageRecord",
-   "_rev": "7-09435709594e32b6c2d97107de60ed67",
    "language": "javascript",
    "views": {
        "dataVolume": {

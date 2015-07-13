@@ -1,6 +1,5 @@
 {
    "_id": "_design/ServiceUsageRecord",
-   "_rev": "12-1678cf4cf6c45fab21d89cd17c8970f9",
    "language": "javascript",
    "views": {
        "all": {
