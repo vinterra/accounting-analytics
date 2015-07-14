@@ -1,19 +1,15 @@
-/**
- * 
- */
 package org.gcube.accounting.analytics.persistence;
 
 import java.net.URI;
 
 import org.gcube.accounting.persistence.AccountingPersistenceConfiguration;
+import org.gcube.common.resources.gcore.ServiceEndpoint;
 
 /**
  * @author Luca Frosini (ISTI - CNR) http://www.lucafrosini.com/
  *
  */
 public class AccountingPersistenceQueryConfiguration extends AccountingPersistenceConfiguration {
-	
-	protected final String SERVICE_ENDPOINT_NAME = "PersistenceQuery";
 	
 	public AccountingPersistenceQueryConfiguration(){
 		super();
@@ -24,6 +20,8 @@ public class AccountingPersistenceQueryConfiguration extends AccountingPersisten
 	}
 	
 	public AccountingPersistenceQueryConfiguration(String persistenceClassName) throws Exception{
-		super(persistenceClassName);
+		super.init();
+		ServiceEndpoint serviceEndpoint = getServiceEndpoint(SERVICE_ENDPOINT_CATEGORY, SERVICE_ENDPOINT_NAME, persistenceClassName);
+		setValues(serviceEndpoint, persistenceClassName);
 	}
 }

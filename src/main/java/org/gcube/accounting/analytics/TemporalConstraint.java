@@ -10,7 +10,7 @@ package org.gcube.accounting.analytics;
 public class TemporalConstraint {
 
 	public enum AggregationMode {
-		HOURLY, DAILY, WEEKLY, MONTHLY, YEARLY
+		YEARLY, MONTHLY, DAILY, HOURLY, MINUTELY, SECONDLY, MILLISECONDLY  
 	}
 	
 	protected long startTime;
