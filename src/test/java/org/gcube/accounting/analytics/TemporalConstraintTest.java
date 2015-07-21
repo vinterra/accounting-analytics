@@ -77,9 +77,7 @@ public class TemporalConstraintTest {
 		
 		for(AggregationMode aggregationMode : AggregationMode.values()){
 			TemporalConstraint temporalConstraint = new TemporalConstraint(startTime.getTimeInMillis(), endTime.getTimeInMillis(), aggregationMode);
-			if(aggregationMode==AggregationMode.MILLISECONDLY || 
-					aggregationMode==AggregationMode.SECONDLY || 
-					aggregationMode==AggregationMode.MINUTELY){
+			if(aggregationMode==AggregationMode.MILLISECONDLY){
 				break;
 			}
 			
