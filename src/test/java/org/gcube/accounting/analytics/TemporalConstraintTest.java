@@ -77,6 +77,7 @@ public class TemporalConstraintTest {
 		
 		for(AggregationMode aggregationMode : AggregationMode.values()){
 			TemporalConstraint temporalConstraint = new TemporalConstraint(startTime.getTimeInMillis(), endTime.getTimeInMillis(), aggregationMode);
+			
 			if(aggregationMode==AggregationMode.MILLISECONDLY){
 				break;
 			}
@@ -90,6 +91,7 @@ public class TemporalConstraintTest {
 				logger.debug("{} generate asequence with size {}", 
 						temporalConstraint, sequence.size());
 			}
+			
 			int expected = expectedSequenceSize[aggregationMode.ordinal()];
 			
 			// Expected has 1 more value because the extremes are contained.

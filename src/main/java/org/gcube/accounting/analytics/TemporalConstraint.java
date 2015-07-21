@@ -155,7 +155,7 @@ public class TemporalConstraint {
 		progressTime.setTimeInMillis(alignedStartTime.getTimeInMillis());
 		
 		while(progressTime.getTimeInMillis() <= alignedEndTimeInMillis){
-			logger.trace("Progress Time : {}", timeInMillisToString(progressTime.getTimeInMillis()));
+			//logger.trace("Progress Time : {}", timeInMillisToString(progressTime.getTimeInMillis()));
 			Calendar item = Calendar.getInstance();
 			item.setTimeZone(DEFAULT_TIME_ZONE);
 			item.setTimeInMillis(progressTime.getTimeInMillis());
