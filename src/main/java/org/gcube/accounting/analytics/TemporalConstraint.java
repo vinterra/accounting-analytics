@@ -3,15 +3,51 @@
  */
 package org.gcube.accounting.analytics;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.TimeZone;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author Luca Frosini (ISTI - CNR) http://www.lucafrosini.com/
  *
  */
 public class TemporalConstraint {
-
+	
+	private static final Logger logger = LoggerFactory.getLogger(TemporalConstraint.class);
+	
+	private static final String UTC_TIME_ZONE = "UTC";
+	public static final TimeZone DEFAULT_TIME_ZONE = TimeZone.getTimeZone(UTC_TIME_ZONE); 
+	
 	public enum AggregationMode {
 		YEARLY, MONTHLY, DAILY, HOURLY, MINUTELY, SECONDLY, MILLISECONDLY  
 	}
+	
+	public enum CalendarEnum {
+		YEAR(Calendar.YEAR),
+		MONTH(Calendar.MONTH),
+		DAY(Calendar.DAY_OF_MONTH),
+		HOUR(Calendar.HOUR_OF_DAY),
+		MINUTE(Calendar.MINUTE),
+		SECOND(Calendar.SECOND),
+		MILLISECOND(Calendar.MILLISECOND);
+		
+		private final int calendarValue;
+		
+		CalendarEnum(int calendarValue){
+			this.calendarValue = calendarValue;
+		}
+		
+		public int getCalendarValue(){
+			return calendarValue;
+		}
+		
+	};
 	
 	protected long startTime;
 	protected long endTime;
@@ -64,6 +100,88 @@ public class TemporalConstraint {
 	public void setAggregationMode(AggregationMode aggregationMode) {
 		this.aggregationMode = aggregationMode;
 	}
+
+	public static String timeInMillisToString(long timeInMillis){
+		Date date = new Date(timeInMillis);
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SS z");
+		simpleDateFormat.setTimeZone(DEFAULT_TIME_ZONE);
+		return String.format("%s (%d millis)", simpleDateFormat.format(date), timeInMillis);
+	}
 	
+	public static Calendar getAlignedCalendar(long millis, AggregationMode aggregationMode){
+		Calendar alignedCalendar = Calendar.getInstance();
+		alignedCalendar.setTimeZone(DEFAULT_TIME_ZONE);
+		alignedCalendar.setTimeInMillis(millis);
+		
+		CalendarEnum[] calendarValues = CalendarEnum.values();
+
+		for(int i=aggregationMode.ordinal()+1; i<calendarValues.length; i++){
+			int calendarValue = calendarValues[i].getCalendarValue();
+
+			if(calendarValue == Calendar.DAY_OF_MONTH){
+				alignedCalendar.set(calendarValue, 1);
+			} else{
+				alignedCalendar.set(calendarValue, 0);
+			}
+			
+		}
+
+		return alignedCalendar;
+	}
+	
+	public Calendar getAlignedStartTime(){
+		return getAlignedCalendar(startTime, aggregationMode);
+	}
+	
+	public Calendar getAlignedEndTime(){
+		return getAlignedCalendar(endTime, aggregationMode);
+	}
+	
+	public List<Calendar> getCalendarSequence(){
+		List<Calendar> sequence = new ArrayList<Calendar>();
+		
+		CalendarEnum[] calendarValues = CalendarEnum.values();
+		int calendarValue = calendarValues[aggregationMode.ordinal()].getCalendarValue();
+		
+		Calendar alignedStartTime = getAlignedStartTime();
+		logger.trace("Aligned StartTime : {}", timeInMillisToString(alignedStartTime.getTimeInMillis()));
+		
+		Calendar alignedEndTime = getAlignedEndTime();
+		long alignedEndTimeInMillis = alignedEndTime.getTimeInMillis();
+		logger.trace("Aligned EndTime : {}", timeInMillisToString(alignedEndTime.getTimeInMillis()));
+		
+		Calendar progressTime = Calendar.getInstance();
+		progressTime.setTimeZone(DEFAULT_TIME_ZONE);
+		progressTime.setTimeInMillis(alignedStartTime.getTimeInMillis());
+		
+		while(progressTime.getTimeInMillis() <= alignedEndTimeInMillis){
+			logger.trace("Progress Time : {}", timeInMillisToString(progressTime.getTimeInMillis()));
+			Calendar item = Calendar.getInstance();
+			item.setTimeZone(DEFAULT_TIME_ZONE);
+			item.setTimeInMillis(progressTime.getTimeInMillis());
+			
+			sequence.add(item);
+			progressTime.add(calendarValue, 1);
+		}
+		
+		return sequence;
+	}
+	
+	
+	public static List<String> getSequenceAsStringList(List<Calendar> sequence){
+		List<String> stringSequence = new ArrayList<String>();
+		for(Calendar calendar : sequence){
+			stringSequence.add(timeInMillisToString(calendar.getTimeInMillis()));
+		}
+		return stringSequence;
+	}
+
+	@Override
+	public String toString(){
+		return String.format("StartTime : %s, EndTime : %s, Aggregated %s", 
+				timeInMillisToString(startTime), 
+				timeInMillisToString(endTime),
+				aggregationMode.toString());
+	}
 	
 }

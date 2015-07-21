@@ -5,7 +5,6 @@
 .settings/org.eclipse.jdt.core.prefs -text
 .settings/org.eclipse.m2e.core.prefs -text
 /pom.xml -text
-src/main/java/org/gcube/accounting/analytics/BasicQuery.java -text
 src/main/java/org/gcube/accounting/analytics/Filter.java -text
 src/main/java/org/gcube/accounting/analytics/Info.java -text
 src/main/java/org/gcube/accounting/analytics/ResourceRecordQuery.java -text
@@ -16,4 +15,5 @@ src/main/java/org/gcube/accounting/analytics/persistence/AccountingPersistenceQu
 src/main/java/org/gcube/accounting/analytics/persistence/AccountingPersistenceQueryConfiguration.java -text
 src/main/java/org/gcube/accounting/analytics/persistence/AccountingPersistenceQueryFactory.java -text
 src/test/java/org/gcube/accounting/analytics/ResourceRecordQueryTest.java -text
+src/test/java/org/gcube/accounting/analytics/TemporalConstraintTest.java -text
 src/test/resources/logback-test.xml -text

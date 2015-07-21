@@ -3,7 +3,9 @@
  */
 package org.gcube.accounting.analytics.persistence;
 
+import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 import org.gcube.accounting.analytics.Filter;
 import org.gcube.accounting.analytics.Info;
@@ -18,10 +20,10 @@ public abstract class AccountingPersistenceQuery {
 	
 	protected abstract void prepareConnection(AccountingPersistenceQueryConfiguration configuration) throws Exception;
 	
-	protected abstract List<Info> reallyQuery(Class<? extends SingleUsageRecord> usageRecordType, 
+	protected abstract Map<Calendar, Info> reallyQuery(Class<? extends SingleUsageRecord> usageRecordType, 
 			TemporalConstraint temporalConstraint, List<Filter> filters) throws Exception;
 	
-	public List<Info> query(Class<? extends SingleUsageRecord> usageRecordType, 
+	public Map<Calendar, Info> query(Class<? extends SingleUsageRecord> usageRecordType, 
 			TemporalConstraint temporalConstraint, List<Filter> filters) throws Exception{
 		return reallyQuery(usageRecordType, temporalConstraint, filters);
 	}

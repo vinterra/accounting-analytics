@@ -60,7 +60,7 @@ public class Info {
 	@Override
 	public String toString(){
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SS z");
-		simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+		simpleDateFormat.setTimeZone(TemporalConstraint.DEFAULT_TIME_ZONE);
 		return String.format("Date : %s, Value : %s", simpleDateFormat.format(date), value.toString());
 	}
 }
