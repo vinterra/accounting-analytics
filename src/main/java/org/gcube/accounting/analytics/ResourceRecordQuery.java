@@ -45,7 +45,7 @@ public class ResourceRecordQuery {
 					SingleUsageRecord singleUsageRecord = resourceRecordsType.newInstance();
 					resourceRecords.put(resourceRecordsType, singleUsageRecord.getRequiredFields());
 				} catch (InstantiationException | IllegalAccessException e) {
-					logger.error(String.format("Unable to correctly istantiate %s", resourceRecordsType.getSimpleName()), e.getCause());
+					logger.error(String.format("Unable to correctly istantiate %s", resourceRecordsType.getSimpleName()), e);
 				}
 			}
 			
