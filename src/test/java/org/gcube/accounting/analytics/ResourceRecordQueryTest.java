@@ -27,6 +27,11 @@ public class ResourceRecordQueryTest {
 		 * Generated Serial Version UID
 		 */
 		private static final long serialVersionUID = 1939161386352514727L;
+
+		@Override
+		protected String giveMeUsageRecordType() {
+			return TestUsageRecord.class.getSimpleName();
+		}
 		
 	}
 	
