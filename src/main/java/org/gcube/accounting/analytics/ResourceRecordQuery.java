@@ -16,6 +16,7 @@ import org.gcube.accounting.analytics.exception.NoAvailableScopeException;
 import org.gcube.accounting.analytics.exception.NoUsableAccountingPersistenceQueryFound;
 import org.gcube.accounting.analytics.persistence.AccountingPersistenceQuery;
 import org.gcube.accounting.analytics.persistence.AccountingPersistenceQueryFactory;
+import org.gcube.accounting.datamodel.AggregatedUsageRecord;
 import org.gcube.accounting.datamodel.SingleUsageRecord;
 import org.gcube.accounting.datamodel.usagerecords.ServiceUsageRecord;
 import org.gcube.common.scope.api.ScopeProvider;
@@ -110,7 +111,7 @@ public class ResourceRecordQuery {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<Info> getInfo(Class<? extends SingleUsageRecord> usageRecordType, 
+	public List<Info> getInfo(@SuppressWarnings("rawtypes") Class<? extends AggregatedUsageRecord> usageRecordType, 
 			TemporalConstraint temporalConstraint, List<Filter> filters, boolean pad) throws Exception {
 		Map<Calendar, Info> unpaddedResults = accountingPersistenceQuery.query(usageRecordType, temporalConstraint, filters);
 		if(!pad){
@@ -128,7 +129,7 @@ public class ResourceRecordQuery {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<Info> getInfo(Class<? extends SingleUsageRecord> usageRecordType, 
+	public List<Info> getInfo(@SuppressWarnings("rawtypes") Class<? extends AggregatedUsageRecord> usageRecordType, 
 			TemporalConstraint temporalConstraint, List<Filter> filters) throws Exception{
 		return getInfo(usageRecordType, temporalConstraint, filters, false);
 	}
