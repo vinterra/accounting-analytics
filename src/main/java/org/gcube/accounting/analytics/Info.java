@@ -19,8 +19,8 @@ public class Info {
 	protected JSONObject value;
 	
 	/**
-	 * @param calendar
-	 * @param value
+	 * @param date the date
+	 * @param value the JSON value
 	 */
 	public Info(Date date, JSONObject value) {
 		super();

@@ -13,8 +13,8 @@ public class Filter {
 	protected String value;
 	
 	/**
-	 * @param key
-	 * @param value
+	 * @param key the key to filter
+	 * @param value the value fo the key to filter
 	 */
 	public Filter(String key, String value) {
 		this.key = key;

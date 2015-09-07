@@ -22,12 +22,22 @@ public class TemporalConstraint {
 	private static final Logger logger = LoggerFactory.getLogger(TemporalConstraint.class);
 	
 	private static final String UTC_TIME_ZONE = "UTC";
+	
 	public static final TimeZone DEFAULT_TIME_ZONE = TimeZone.getTimeZone(UTC_TIME_ZONE); 
 	
+	/**
+	 * Valid Aggregation Mode
+	 * @author Luca Frosini (ISTI - CNR) http://www.lucafrosini.com/
+	 */
 	public enum AggregationMode {
 		YEARLY, MONTHLY, DAILY, HOURLY, MINUTELY, SECONDLY, MILLISECONDLY  
 	}
 	
+	/**
+	 * Used to map the Calendar constant to an enum value which has the same
+	 * ordinal of {@link AggregationMode} 
+	 * @author Luca Frosini (ISTI - CNR) http://www.lucafrosini.com/
+	 */
 	public enum CalendarEnum {
 		YEAR(Calendar.YEAR),
 		MONTH(Calendar.MONTH),
@@ -53,6 +63,11 @@ public class TemporalConstraint {
 	protected long endTime;
 	protected AggregationMode aggregationMode;
 	
+	/**
+	 * @param startTime StartTime
+	 * @param endTime End Time
+	 * @param aggregationMode Aggregation Mode
+	 */
 	public TemporalConstraint(long startTime, long endTime, AggregationMode aggregationMode){
 		this.startTime = startTime;
 		this.endTime = endTime;
