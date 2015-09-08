@@ -159,4 +159,14 @@ public class ResourceRecordQuery {
 		return getInfo(usageRecordType, temporalConstraint, filters, false);
 	}
 	
+	/**
+	 * Return the list of key valid for queries a certain usage record type
+	 * @param usageRecordType the usage record type 
+	 * @return a set containing the list of key
+	 * @throws Exception if fails
+	 */
+	public Set<String> getFilterKeys(@SuppressWarnings("rawtypes") Class<? extends AggregatedUsageRecord> usageRecordType) throws Exception{
+		return accountingPersistenceQuery.getKeys(usageRecordType);
+	}
+	
 }
