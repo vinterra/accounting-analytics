@@ -165,7 +165,7 @@ public class ResourceRecordQuery {
 	 * @return a set containing the list of key
 	 * @throws Exception if fails
 	 */
-	public Set<String> getFilterKeys(@SuppressWarnings("rawtypes") Class<? extends AggregatedUsageRecord> usageRecordType) throws Exception{
+	public Set<String> getKeys(@SuppressWarnings("rawtypes") Class<? extends AggregatedUsageRecord> usageRecordType) throws Exception{
 		return accountingPersistenceQuery.getKeys(usageRecordType);
 	}
 	
