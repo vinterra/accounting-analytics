@@ -5,7 +5,6 @@ package org.gcube.accounting.analytics;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -120,8 +119,7 @@ public class ResourceRecordQuery {
 			if(unpaddedData.get(progressTime)!=null){
 				paddedResults.add(unpaddedData.get(progressTime));
 			}else{
-				Date date = new Date(progressTime.getTimeInMillis());
-				Info info = new Info(date, jsonObject);
+				Info info = new Info(progressTime, jsonObject);
 				paddedResults.add(info);
 			}
 		}

@@ -4,7 +4,7 @@
 package org.gcube.accounting.analytics;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Calendar;
 
 import org.json.JSONObject;
 
@@ -15,31 +15,31 @@ import org.json.JSONObject;
  */
 public class Info {
 
-	protected Date date;
+	protected Calendar calendar;
 	protected JSONObject value;
 	
 	/**
 	 * @param date the date
 	 * @param value the JSON value
 	 */
-	public Info(Date date, JSONObject value) {
+	public Info(Calendar calendar, JSONObject value) {
 		super();
-		this.date = date;
+		this.calendar = calendar;
 		this.value = value;
 	}
 
 	/**
 	 * @return the date
 	 */
-	public Date getDate() {
-		return date;
+	public Calendar getCalendar() {
+		return calendar;
 	}
 
 	/**
 	 * @param date the date to set
 	 */
-	public void setDate(Date date) {
-		this.date = date;
+	public void setCalendar(Calendar calendar) {
+		this.calendar = calendar;
 	}
 
 	/**
@@ -60,6 +60,6 @@ public class Info {
 	public String toString(){
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SS z");
 		simpleDateFormat.setTimeZone(TemporalConstraint.DEFAULT_TIME_ZONE);
-		return String.format("Date : %s, Value : %s", simpleDateFormat.format(date), value.toString());
+		return String.format("Date : %s, Value : %s", simpleDateFormat.format(calendar.getTime()), value.toString());
 	}
 }
