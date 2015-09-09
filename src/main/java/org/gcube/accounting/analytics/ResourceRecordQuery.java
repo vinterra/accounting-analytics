@@ -5,6 +5,7 @@ package org.gcube.accounting.analytics;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -165,8 +166,11 @@ public class ResourceRecordQuery {
 	 * @return a set containing the list of key
 	 * @throws Exception if fails
 	 */
-	public Set<String> getKeys(@SuppressWarnings("rawtypes") Class<? extends AggregatedUsageRecord> usageRecordType) throws Exception{
-		return accountingPersistenceQuery.getKeys(usageRecordType);
+	public List<String> getKeys(@SuppressWarnings("rawtypes") Class<? extends AggregatedUsageRecord> usageRecordType) throws Exception{
+		Set<String> keys = accountingPersistenceQuery.getKeys(usageRecordType);
+		List<String> toSort = new ArrayList<String>(keys);
+		Collections.sort(toSort);
+		return toSort;
 	}
 	
 }
