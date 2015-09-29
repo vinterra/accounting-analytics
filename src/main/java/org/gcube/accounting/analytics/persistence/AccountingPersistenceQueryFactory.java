@@ -26,10 +26,17 @@ public abstract class AccountingPersistenceQueryFactory {
 		accountingPersistenceQueries = new HashMap<String, AccountingPersistenceQuery>();
 	}
 	
+	/**
+	 * @return AccountingPersistenceQuery instance
+	 * @throws NoAvailableScopeException if no configuration is found on IS for
+	 * the current scope
+	 * @throws NoUsableAccountingPersistenceQueryFound if fails to instantiate
+	 * the #AccountingPersistenceQuery
+	 */
 	public synchronized static AccountingPersistenceQuery getInstance() throws NoAvailableScopeException, NoUsableAccountingPersistenceQueryFound {
 		String scope = ScopeProvider.instance.get();
 		if(scope==null){
-			new NoAvailableScopeException();
+			throw new NoAvailableScopeException();
 		}
 		
 		AccountingPersistenceQuery accountingPersistenceQuery = accountingPersistenceQueries.get(scope);

@@ -57,5 +57,9 @@ public abstract class AccountingPersistenceQuery {
 	 */
 	public abstract Set<String> getKeys(@SuppressWarnings("rawtypes") Class<? extends AggregatedUsageRecord> usageRecordType) throws Exception;
 	
+	/**
+	 * Close the connection to persistence
+	 * @throws Exception if the close fails
+	 */
 	public abstract void close() throws Exception;
 }

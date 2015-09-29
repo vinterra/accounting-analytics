@@ -19,7 +19,7 @@ public class Info {
 	protected JSONObject value;
 	
 	/**
-	 * @param date the date
+	 * @param calendar the date
 	 * @param value the JSON value
 	 */
 	public Info(Calendar calendar, JSONObject value) {
@@ -36,7 +36,7 @@ public class Info {
 	}
 
 	/**
-	 * @param date the date to set
+	 * @param calendar the date to set
 	 */
 	public void setCalendar(Calendar calendar) {
 		this.calendar = calendar;
