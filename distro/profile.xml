@@ -3,10 +3,10 @@
 	<ID></ID>
 	<Type>Service</Type>
 	<Profile>
-		<Description>${description}</Description>
 		<Class>Accounting</Class>
 		<Name>${artifactId}</Name>
-		<Version>${version}</Version>
+		<Description>${description}</Description>
+		<Version>1.0.0</Version>
 		<Packages>
 			<Software>
 				<Description>${description}</Description>
