@@ -40,7 +40,7 @@ public class ResourceRecordQuery {
 	 * Records Types
 	 * @return the Map
 	 */
-	public static Map<Class<? extends SingleUsageRecord>, Set<String>> getResourceRecordsTypes() {
+	public static synchronized Map<Class<? extends SingleUsageRecord>, Set<String>> getResourceRecordsTypes() {
 		if(resourceRecords==null){
 			resourceRecords = new HashMap<Class<? extends SingleUsageRecord>, Set<String>>();
 			Package usageRecordPackage = ServiceUsageRecord.class.getPackage();
