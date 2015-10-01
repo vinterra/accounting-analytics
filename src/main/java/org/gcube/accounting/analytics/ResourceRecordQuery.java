@@ -173,4 +173,11 @@ public class ResourceRecordQuery {
 		return toSort;
 	}
 	
+	public List<String> getPossibleValuesForKey(@SuppressWarnings("rawtypes") Class<? extends AggregatedUsageRecord> usageRecordType, String key) throws Exception {
+		Set<String> keys = accountingPersistenceQuery.getPossibleValuesForKey(usageRecordType, key);
+		List<String> toSort = new ArrayList<String>(keys);
+		Collections.sort(toSort);
+		return toSort;
+	}
+	
 }

@@ -57,9 +57,20 @@ public abstract class AccountingPersistenceQuery {
 	 */
 	public abstract Set<String> getKeys(@SuppressWarnings("rawtypes") Class<? extends AggregatedUsageRecord> usageRecordType) throws Exception;
 	
+	
+	/**
+	 * Return the list of possible values for a key for a certain usage record type
+	 * @param usageRecordType the usage record type 
+	 * @param key the key 
+	 * @return a set containing the list of possible values
+	 * @throws Exception if fails
+	 */
+	public abstract Set<String> getPossibleValuesForKey(@SuppressWarnings("rawtypes") Class<? extends AggregatedUsageRecord> usageRecordType, String key) throws Exception;
+	
 	/**
 	 * Close the connection to persistence
 	 * @throws Exception if the close fails
 	 */
 	public abstract void close() throws Exception;
+	
 }
