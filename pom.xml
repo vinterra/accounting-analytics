@@ -48,6 +48,16 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
+			<groupId>org.gcube.core</groupId>
+			<artifactId>common-scope</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.gcube.resources</groupId>
+			<artifactId>common-gcore-resources</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
          <groupId>org.reflections</groupId>
          <artifactId>reflections</artifactId>
          <version>0.9.10</version>
