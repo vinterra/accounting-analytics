@@ -19,8 +19,10 @@ src/main/java/org/gcube/accounting/analytics/ResourceRecordQuery.java -text
 src/main/java/org/gcube/accounting/analytics/TemporalConstraint.java -text
 src/main/java/org/gcube/accounting/analytics/exception/NoAvailableScopeException.java -text
 src/main/java/org/gcube/accounting/analytics/exception/NoUsableAccountingPersistenceQueryFound.java -text
+src/main/java/org/gcube/accounting/analytics/persistence/AccountingPersistenceBackendQuery.java -text
+src/main/java/org/gcube/accounting/analytics/persistence/AccountingPersistenceBackendQueryConfiguration.java -text
+src/main/java/org/gcube/accounting/analytics/persistence/AccountingPersistenceBackendQueryFactory.java -text
 src/main/java/org/gcube/accounting/analytics/persistence/AccountingPersistenceQuery.java -text
-src/main/java/org/gcube/accounting/analytics/persistence/AccountingPersistenceQueryConfiguration.java -text
 src/main/java/org/gcube/accounting/analytics/persistence/AccountingPersistenceQueryFactory.java -text
 src/test/java/org/gcube/accounting/analytics/ResourceRecordQueryTest.java -text
 src/test/java/org/gcube/accounting/analytics/TemporalConstraintTest.java -text
