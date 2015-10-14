@@ -14,8 +14,8 @@ import java.util.Set;
 
 import org.gcube.accounting.analytics.exception.NoAvailableScopeException;
 import org.gcube.accounting.analytics.exception.NoUsableAccountingPersistenceQueryFound;
-import org.gcube.accounting.analytics.persistence.AccountingPersistenceQuery;
-import org.gcube.accounting.analytics.persistence.AccountingPersistenceQueryFactory;
+import org.gcube.accounting.analytics.persistence.AccountingPersistenceBackendQuery;
+import org.gcube.accounting.analytics.persistence.AccountingPersistenceBackendQueryFactory;
 import org.gcube.accounting.datamodel.AggregatedUsageRecord;
 import org.gcube.accounting.datamodel.SingleUsageRecord;
 import org.gcube.accounting.datamodel.usagerecords.ServiceUsageRecord;
@@ -60,7 +60,7 @@ public class ResourceRecordQuery {
 	}
 	
 	
-	protected AccountingPersistenceQuery accountingPersistenceQuery;
+	protected AccountingPersistenceBackendQuery accountingPersistenceQuery;
 	
 	/**
 	 * Instantiate the ResourceRecord for the current scope
@@ -70,7 +70,7 @@ public class ResourceRecordQuery {
 	 * instance which can query in that scope
 	 */
 	public ResourceRecordQuery() throws NoAvailableScopeException, NoUsableAccountingPersistenceQueryFound {
-		this.accountingPersistenceQuery = AccountingPersistenceQueryFactory.getInstance();
+		this.accountingPersistenceQuery = AccountingPersistenceBackendQueryFactory.getInstance();
 	}
 	
 	/**
@@ -83,7 +83,7 @@ public class ResourceRecordQuery {
 	 */
 	public ResourceRecordQuery(String scope) throws NoAvailableScopeException, NoUsableAccountingPersistenceQueryFound {
 		ScopeProvider.instance.set(scope);
-		this.accountingPersistenceQuery = AccountingPersistenceQueryFactory.getInstance();
+		this.accountingPersistenceQuery = AccountingPersistenceBackendQueryFactory.getInstance();
 	}
 	
 	protected static JSONObject getPaddingJSONObject(Map<Calendar, Info> unpaddedResults) throws JSONException{

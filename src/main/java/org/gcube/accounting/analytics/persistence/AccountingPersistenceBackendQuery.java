@@ -12,25 +12,21 @@ import org.gcube.accounting.analytics.Filter;
 import org.gcube.accounting.analytics.Info;
 import org.gcube.accounting.analytics.TemporalConstraint;
 import org.gcube.accounting.datamodel.AggregatedUsageRecord;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Luca Frosini (ISTI - CNR) http://www.lucafrosini.com/
  *
  */
-public class AccountingPersistenceQuery {
-
-	private static final AccountingPersistenceQuery accountingPersistenceQuery;
+public abstract class AccountingPersistenceBackendQuery {
 	
-	private AccountingPersistenceQuery(){}
+	private static final Logger logger = LoggerFactory.getLogger(AccountingPersistenceBackendQuery.class);
 	
-	static {
-		accountingPersistenceQuery = new AccountingPersistenceQuery();
-	}
+	protected abstract void prepareConnection(AccountingPersistenceBackendQueryConfiguration configuration) throws Exception;
 	
-	protected static synchronized AccountingPersistenceQuery getInstance(){
-		return accountingPersistenceQuery;
-	}
-	
+	protected abstract Map<Calendar, Info> reallyQuery(@SuppressWarnings("rawtypes") Class<? extends AggregatedUsageRecord> usageRecordType, 
+			TemporalConstraint temporalConstraint, List<Filter> filters) throws Exception;
 	
 	/**
 	 * Query the persistence obtaining a Map where the date is the key and 
@@ -47,7 +43,10 @@ public class AccountingPersistenceQuery {
 	 */
 	public Map<Calendar, Info> query(@SuppressWarnings("rawtypes") Class<? extends AggregatedUsageRecord> usageRecordType, 
 			TemporalConstraint temporalConstraint, List<Filter> filters) throws Exception{
-		return AccountingPersistenceBackendQueryFactory.getInstance().query(usageRecordType, temporalConstraint, filters);
+		logger.trace("Request query: UsageRecordType={}, {}={}, {}s={}", usageRecordType.newInstance().getUsageRecordType(), 
+				TemporalConstraint.class.getSimpleName(), temporalConstraint.toString(), 
+				Filter.class.getSimpleName(), filters);
+		return reallyQuery(usageRecordType, temporalConstraint, filters);
 	}
 	
 	/**
@@ -56,9 +55,7 @@ public class AccountingPersistenceQuery {
 	 * @return a set containing the list of key
 	 * @throws Exception if fails
 	 */
-	public Set<String> getKeys(@SuppressWarnings("rawtypes") Class<? extends AggregatedUsageRecord> usageRecordType) throws Exception {
-		return AccountingPersistenceBackendQueryFactory.getInstance().getKeys(usageRecordType);
-	}
+	public abstract Set<String> getKeys(@SuppressWarnings("rawtypes") Class<? extends AggregatedUsageRecord> usageRecordType) throws Exception;
 	
 	
 	/**
@@ -68,16 +65,12 @@ public class AccountingPersistenceQuery {
 	 * @return a set containing the list of possible values
 	 * @throws Exception if fails
 	 */
-	public Set<String> getPossibleValuesForKey(@SuppressWarnings("rawtypes") Class<? extends AggregatedUsageRecord> usageRecordType, String key) throws Exception {
-		return AccountingPersistenceBackendQueryFactory.getInstance().getPossibleValuesForKey(usageRecordType, key);
-	}
+	public abstract Set<String> getPossibleValuesForKey(@SuppressWarnings("rawtypes") Class<? extends AggregatedUsageRecord> usageRecordType, String key) throws Exception;
 	
 	/**
 	 * Close the connection to persistence
 	 * @throws Exception if the close fails
 	 */
-	public void close() throws Exception {
-		AccountingPersistenceBackendQueryFactory.getInstance().close();
-	}
+	public abstract void close() throws Exception;
 	
 }
