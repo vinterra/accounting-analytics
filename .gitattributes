@@ -26,4 +26,5 @@ src/main/java/org/gcube/accounting/analytics/persistence/AccountingPersistenceQu
 src/main/java/org/gcube/accounting/analytics/persistence/AccountingPersistenceQueryFactory.java -text
 src/test/java/org/gcube/accounting/analytics/ResourceRecordQueryTest.java -text
 src/test/java/org/gcube/accounting/analytics/TemporalConstraintTest.java -text
+src/test/java/org/gcube/accounting/analytics/persistence/AccountingPersistenceConfigurationTest.java -text
 src/test/resources/logback-test.xml -text
