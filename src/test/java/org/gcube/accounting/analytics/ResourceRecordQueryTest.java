@@ -7,12 +7,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.gcube.accounting.datamodel.BasicUsageRecord;
-import org.gcube.accounting.datamodel.SingleUsageRecord;
+import org.gcube.accounting.datamodel.RawUsageRecord;
 import org.gcube.accounting.datamodel.usagerecords.JobUsageRecord;
 import org.gcube.accounting.datamodel.usagerecords.PortletUsageRecord;
 import org.gcube.accounting.datamodel.usagerecords.ServiceUsageRecord;
 import org.gcube.accounting.datamodel.usagerecords.StorageUsageRecord;
 import org.gcube.accounting.datamodel.usagerecords.TaskUsageRecord;
+import org.gcube.documentstore.records.Record;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -21,7 +22,7 @@ import org.junit.Test;
  */
 public class ResourceRecordQueryTest {
 
-	public class TestUsageRecord extends BasicUsageRecord implements SingleUsageRecord {
+	public class TestUsageRecord extends BasicUsageRecord {
 
 		/**
 		 * Generated Serial Version UID
@@ -35,35 +36,32 @@ public class ResourceRecordQueryTest {
 		
 	}
 	
-	public static Set<Class<? extends SingleUsageRecord>> getExpectedResourceRecordsTypes(){
-		Set<Class<? extends SingleUsageRecord>> expected = new HashSet<Class<? extends SingleUsageRecord>>();
+	public static Set<Class<? extends Record>> getExpectedResourceRecordsTypes(){
+		Set<Class<? extends Record>> expected = new HashSet<Class<? extends Record>>();
 		expected.add(ServiceUsageRecord.class);
 		expected.add(StorageUsageRecord.class);
 		expected.add(JobUsageRecord.class);
 		expected.add(TaskUsageRecord.class);
 		expected.add(PortletUsageRecord.class);
+		expected.add(RawUsageRecord.class);
 		return expected;
 	}
 	
 	@Test
 	public void testGetResourceRecordsTypes(){
-		Set<Class<? extends SingleUsageRecord>> expected = getExpectedResourceRecordsTypes();
-		Set<Class<? extends SingleUsageRecord>> found = ResourceRecordQuery.getResourceRecordsTypes().keySet();
+		Set<Class<? extends Record>> expected = getExpectedResourceRecordsTypes();
+		Set<Class<? extends Record>> found = ResourceRecordQuery.getResourceRecordsTypes().keySet();
 		Assert.assertTrue(expected.containsAll(found));
 		Assert.assertTrue(found.containsAll(expected));
 	}
-	
-	
+
 	@Test
 	public void testGetResourceRecordsTypesWithFakeClass(){
-		Set<Class<? extends SingleUsageRecord>> expected = getExpectedResourceRecordsTypes();
+		Set<Class<? extends Record>> expected = getExpectedResourceRecordsTypes();
 		expected.add(TestUsageRecord.class);
-		Set<Class<? extends SingleUsageRecord>> found = ResourceRecordQuery.getResourceRecordsTypes().keySet();
+		Set<Class<? extends Record>> found = ResourceRecordQuery.getResourceRecordsTypes().keySet();
 		Assert.assertTrue(expected.containsAll(found));
 		Assert.assertFalse(found.containsAll(expected));
 	}
-	
-	
-	
 	
 }

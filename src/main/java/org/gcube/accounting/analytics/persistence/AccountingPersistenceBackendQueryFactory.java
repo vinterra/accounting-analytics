@@ -45,16 +45,16 @@ public abstract class AccountingPersistenceBackendQueryFactory {
 			try {
 				ServiceLoader<AccountingPersistenceBackendQuery> serviceLoader = ServiceLoader.load(AccountingPersistenceBackendQuery.class);
 				for (AccountingPersistenceBackendQuery found : serviceLoader) {
+					Class<? extends AccountingPersistenceBackendQuery> foundClass = found.getClass();
 					try {
-						String foundClassName = found.getClass().getSimpleName();
+						String foundClassName = foundClass.getSimpleName();
 						logger.debug("Testing {}", foundClassName);
-						
-						AccountingPersistenceBackendQueryConfiguration configuration = new AccountingPersistenceBackendQueryConfiguration(foundClassName);
+						AccountingPersistenceBackendQueryConfiguration configuration = new AccountingPersistenceBackendQueryConfiguration(foundClass);
 						found.prepareConnection(configuration);
 						accountingPersistenceQuery = found;
 						break;
 					} catch (Exception e) {
-						logger.debug(String.format("%s not initialized correctly. It will not be used", found.getClass().getSimpleName()));
+						logger.debug(String.format("%s not initialized correctly. It will not be used", foundClass.getSimpleName()));
 					}
 				}
 			} catch(Exception e){

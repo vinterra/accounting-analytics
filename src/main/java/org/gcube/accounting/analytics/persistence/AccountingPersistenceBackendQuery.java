@@ -11,7 +11,7 @@ import java.util.Set;
 import org.gcube.accounting.analytics.Filter;
 import org.gcube.accounting.analytics.Info;
 import org.gcube.accounting.analytics.TemporalConstraint;
-import org.gcube.accounting.datamodel.AggregatedUsageRecord;
+import org.gcube.documentstore.records.AggregatedRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,14 +25,14 @@ public abstract class AccountingPersistenceBackendQuery {
 	
 	protected abstract void prepareConnection(AccountingPersistenceBackendQueryConfiguration configuration) throws Exception;
 	
-	protected abstract Map<Calendar, Info> reallyQuery(@SuppressWarnings("rawtypes") Class<? extends AggregatedUsageRecord> usageRecordType, 
+	protected abstract Map<Calendar, Info> reallyQuery(@SuppressWarnings("rawtypes") Class<? extends AggregatedRecord> usageRecordType, 
 			TemporalConstraint temporalConstraint, List<Filter> filters) throws Exception;
 	
 	/**
 	 * Query the persistence obtaining a Map where the date is the key and 
 	 * the #Info is the value. The result is relative to an Usage Record Type,
 	 * respect a TemporalConstraint and can be applied one or more filters.
-	 * @param usageRecordType the Usage Record Type of interest
+	 * @param recordClass the Usage Record Type of interest
 	 * @param temporalConstraint the TemporalConstraint (interval and aggregation)
 	 * @param filters the filter for the query. If null or empty string get all
 	 * data. The filters are evaluated in the order the are presented and are
@@ -41,31 +41,31 @@ public abstract class AccountingPersistenceBackendQuery {
 	 * requested data
 	 * @throws Exception if fails
 	 */
-	public Map<Calendar, Info> query(@SuppressWarnings("rawtypes") Class<? extends AggregatedUsageRecord> usageRecordType, 
+	public Map<Calendar, Info> query(@SuppressWarnings("rawtypes") Class<? extends AggregatedRecord> recordClass, 
 			TemporalConstraint temporalConstraint, List<Filter> filters) throws Exception{
-		logger.trace("Request query: UsageRecordType={}, {}={}, {}s={}", usageRecordType.newInstance().getUsageRecordType(), 
+		logger.trace("Request query: RecordClass={}, {}={}, {}s={}", recordClass.newInstance().getRecordType(), 
 				TemporalConstraint.class.getSimpleName(), temporalConstraint.toString(), 
 				Filter.class.getSimpleName(), filters);
-		return reallyQuery(usageRecordType, temporalConstraint, filters);
+		return reallyQuery(recordClass, temporalConstraint, filters);
 	}
 	
 	/**
 	 * Return the list of key valid for queries a certain usage record type
-	 * @param usageRecordType the usage record type 
+	 * @param recordClass the usage record class 
 	 * @return a set containing the list of key
 	 * @throws Exception if fails
 	 */
-	public abstract Set<String> getKeys(@SuppressWarnings("rawtypes") Class<? extends AggregatedUsageRecord> usageRecordType) throws Exception;
+	public abstract Set<String> getKeys(@SuppressWarnings("rawtypes") Class<? extends AggregatedRecord> recordClass) throws Exception;
 	
 	
 	/**
 	 * Return the list of possible values for a key for a certain usage record type
-	 * @param usageRecordType the usage record type 
+	 * @param recordClass the usage record type 
 	 * @param key the key 
 	 * @return a set containing the list of possible values
 	 * @throws Exception if fails
 	 */
-	public abstract Set<String> getPossibleValuesForKey(@SuppressWarnings("rawtypes") Class<? extends AggregatedUsageRecord> usageRecordType, String key) throws Exception;
+	public abstract Set<String> getPossibleValuesForKey(@SuppressWarnings("rawtypes") Class<? extends AggregatedRecord> recordClass, String key) throws Exception;
 	
 	/**
 	 * Close the connection to persistence

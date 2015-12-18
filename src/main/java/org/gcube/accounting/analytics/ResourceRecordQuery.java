@@ -5,6 +5,7 @@ package org.gcube.accounting.analytics;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -16,13 +17,12 @@ import org.gcube.accounting.analytics.exception.NoAvailableScopeException;
 import org.gcube.accounting.analytics.exception.NoUsableAccountingPersistenceQueryFound;
 import org.gcube.accounting.analytics.persistence.AccountingPersistenceBackendQuery;
 import org.gcube.accounting.analytics.persistence.AccountingPersistenceBackendQueryFactory;
-import org.gcube.accounting.datamodel.AggregatedUsageRecord;
-import org.gcube.accounting.datamodel.SingleUsageRecord;
-import org.gcube.accounting.datamodel.usagerecords.ServiceUsageRecord;
 import org.gcube.common.scope.api.ScopeProvider;
+import org.gcube.documentstore.records.AggregatedRecord;
+import org.gcube.documentstore.records.Record;
+import org.gcube.documentstore.records.RecordUtility;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,23 +33,21 @@ public class ResourceRecordQuery {
 	
 	private static Logger logger = LoggerFactory.getLogger(ResourceRecordQuery.class);
 	
-	protected static Map<Class<? extends SingleUsageRecord>, Set<String>> resourceRecords = null;
+	protected static Map<Class<? extends Record>, Set<String>> resourceRecords = null;
 	
 	/**
 	 * Return a Map containing a set of required fields for each Resource 
 	 * Records Types
 	 * @return the Map
 	 */
-	public static synchronized Map<Class<? extends SingleUsageRecord>, Set<String>> getResourceRecordsTypes() {
+	public static synchronized Map<Class<? extends Record>, Set<String>> getResourceRecordsTypes() {
 		if(resourceRecords==null){
-			resourceRecords = new HashMap<Class<? extends SingleUsageRecord>, Set<String>>();
-			Package usageRecordPackage = ServiceUsageRecord.class.getPackage();
-			Reflections reflections = new Reflections(usageRecordPackage.getName());
-			Set<Class<? extends SingleUsageRecord>> resourceRecordsTypes = reflections.getSubTypesOf(SingleUsageRecord.class);
-			for(Class<? extends SingleUsageRecord> resourceRecordsType : resourceRecordsTypes){
+			resourceRecords = new HashMap<Class<? extends Record>, Set<String>>();
+			Collection<Class<? extends Record>> resourceRecordsTypes = RecordUtility.getRecordClassesFound().values();
+			for(Class<? extends Record> resourceRecordsType : resourceRecordsTypes){
 				try {
-					SingleUsageRecord singleUsageRecord = resourceRecordsType.newInstance();
-					resourceRecords.put(resourceRecordsType, singleUsageRecord.getRequiredFields());
+					Record record = resourceRecordsType.newInstance();
+					resourceRecords.put(resourceRecordsType, record.getRequiredFields());
 				} catch (InstantiationException | IllegalAccessException e) {
 					logger.error(String.format("Unable to correctly istantiate %s", resourceRecordsType.getSimpleName()), e);
 				}
@@ -138,7 +136,7 @@ public class ResourceRecordQuery {
 	 * @return the requested list of Info 
 	 * @throws Exception if fails
 	 */
-	public List<Info> getInfo(@SuppressWarnings("rawtypes") Class<? extends AggregatedUsageRecord> usageRecordType, 
+	public List<Info> getInfo(@SuppressWarnings("rawtypes") Class<? extends AggregatedRecord> usageRecordType, 
 			TemporalConstraint temporalConstraint, List<Filter> filters, boolean pad) throws Exception {
 		Map<Calendar, Info> unpaddedResults = accountingPersistenceQuery.query(usageRecordType, temporalConstraint, filters);
 		if(!pad){
@@ -155,7 +153,7 @@ public class ResourceRecordQuery {
 	 * @return the requested list of Info 
 	 * @throws Exception if fails
 	 */
-	public List<Info> getInfo(@SuppressWarnings("rawtypes") Class<? extends AggregatedUsageRecord> usageRecordType, 
+	public List<Info> getInfo(@SuppressWarnings("rawtypes") Class<? extends AggregatedRecord> usageRecordType, 
 			TemporalConstraint temporalConstraint, List<Filter> filters) throws Exception{
 		return getInfo(usageRecordType, temporalConstraint, filters, false);
 	}
@@ -166,14 +164,14 @@ public class ResourceRecordQuery {
 	 * @return a set containing the list of key
 	 * @throws Exception if fails
 	 */
-	public List<String> getKeys(@SuppressWarnings("rawtypes") Class<? extends AggregatedUsageRecord> usageRecordType) throws Exception{
+	public List<String> getKeys(@SuppressWarnings("rawtypes") Class<? extends AggregatedRecord> usageRecordType) throws Exception{
 		Set<String> keys = accountingPersistenceQuery.getKeys(usageRecordType);
 		List<String> toSort = new ArrayList<String>(keys);
 		Collections.sort(toSort);
 		return toSort;
 	}
 	
-	public List<String> getPossibleValuesForKey(@SuppressWarnings("rawtypes") Class<? extends AggregatedUsageRecord> usageRecordType, String key) throws Exception {
+	public List<String> getPossibleValuesForKey(@SuppressWarnings("rawtypes") Class<? extends AggregatedRecord> usageRecordType, String key) throws Exception {
 		Set<String> keys = accountingPersistenceQuery.getPossibleValuesForKey(usageRecordType, key);
 		List<String> toSort = new ArrayList<String>(keys);
 		Collections.sort(toSort);

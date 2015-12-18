@@ -21,16 +21,18 @@ public class AccountingPersistenceConfigurationTest {
 
 	public static final String[] SCOPES = new String[]{"/gcube", "/gcube/devNext", "/gcube/devsec"};
 	
+	public abstract class AccountingPersistenceQueryCouchDB extends AccountingPersistenceBackendQuery {}
+	
 	@Test
 	public void getUsernamePasswordForScopes() throws Exception{
 		for(String scope : SCOPES){
 			ScopeProvider.instance.set(scope);
 			try {
-				AccountingPersistenceConfiguration persitenceConfiguration = new AccountingPersistenceConfiguration(COUCHDB_CLASS_NAME);
-				logger.debug("{} {} - {} : {}", scope, 
-						persitenceConfiguration.getUri(),
-						persitenceConfiguration.getUsername(), 
-						persitenceConfiguration.getPassword());
+				AccountingPersistenceBackendQueryConfiguration persitenceConfiguration = new AccountingPersistenceBackendQueryConfiguration(AccountingPersistenceQueryCouchDB.class);
+				String uri = persitenceConfiguration.getProperty(AccountingPersistenceConfiguration.URL_PROPERTY_KEY);
+				String username = persitenceConfiguration.getProperty(AccountingPersistenceConfiguration.USERNAME_PROPERTY_KEY);
+				String password = persitenceConfiguration.getProperty(AccountingPersistenceConfiguration.PASSWORD_PROPERTY_KEY);
+				logger.debug("{} {} - {} : {}", scope, uri, username, password);
 			}catch(IndexOutOfBoundsException e){
 				logger.debug("No AccountingPersistenceConfiguration : \n {} {} \n\n", e.getClass().getName(), e.getMessage());
 			} catch(Exception e){
