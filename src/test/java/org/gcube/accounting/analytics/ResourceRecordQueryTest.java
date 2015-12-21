@@ -7,7 +7,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.gcube.accounting.datamodel.BasicUsageRecord;
-import org.gcube.accounting.datamodel.RawUsageRecord;
 import org.gcube.accounting.datamodel.usagerecords.JobUsageRecord;
 import org.gcube.accounting.datamodel.usagerecords.PortletUsageRecord;
 import org.gcube.accounting.datamodel.usagerecords.ServiceUsageRecord;
@@ -30,7 +29,7 @@ public class ResourceRecordQueryTest {
 		private static final long serialVersionUID = 1939161386352514727L;
 
 		@Override
-		protected String giveMeUsageRecordType() {
+		protected String giveMeRecordType() {
 			return TestUsageRecord.class.getSimpleName();
 		}
 		
@@ -43,7 +42,6 @@ public class ResourceRecordQueryTest {
 		expected.add(JobUsageRecord.class);
 		expected.add(TaskUsageRecord.class);
 		expected.add(PortletUsageRecord.class);
-		expected.add(RawUsageRecord.class);
 		return expected;
 	}
 	
