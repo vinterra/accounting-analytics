@@ -23,6 +23,8 @@ public abstract class AccountingPersistenceBackendQuery {
 	
 	private static final Logger logger = LoggerFactory.getLogger(AccountingPersistenceBackendQuery.class);
 	
+	public static final int KEY_VALUES_LIMIT = 25;
+	
 	protected abstract void prepareConnection(AccountingPersistenceBackendQueryConfiguration configuration) throws Exception;
 	
 	protected abstract Map<Calendar, Info> reallyQuery(@SuppressWarnings("rawtypes") Class<? extends AggregatedRecord> usageRecordType, 
@@ -59,13 +61,33 @@ public abstract class AccountingPersistenceBackendQuery {
 	
 	
 	/**
-	 * Return the list of possible values for a key for a certain usage record type
+	 * Return the list of possible values for a key for a certain usage record 
+	 * type.
+	 * The result are limited to {@link #KEY_VALUES_LIMIT} value. 
+	 * If you want a different limit please use the 
+	 * {@link #getPossibleValuesForKey(Class, String, int)} function.
+	 * Invoking this function has the same effect of invoking 
+	 * {@link #getPossibleValuesForKey(Class, String, int)} function passing 
+	 * {@link #KEY_VALUES_LIMIT} has third argument.
 	 * @param recordClass the usage record type 
 	 * @param key the key 
 	 * @return a set containing the list of possible values
 	 * @throws Exception if fails
 	 */
 	public abstract Set<String> getPossibleValuesForKey(@SuppressWarnings("rawtypes") Class<? extends AggregatedRecord> recordClass, String key) throws Exception;
+	
+	/**
+	 * Return the list of possible values for a key for a certain usage record 
+	 * type.
+	 * The result are limited to limit value. When limit is <= 0 this means
+	 * no limit.
+	 * @param recordClass the usage record type 
+	 * @param key the key
+	 * @param limit limit of result to return.
+	 * @return a set containing the list of possible values
+	 * @throws Exception if fails
+	 */
+	public abstract Set<String> getPossibleValuesForKey(@SuppressWarnings("rawtypes") Class<? extends AggregatedRecord> recordClass, String key, int limit) throws Exception;
 	
 	/**
 	 * Close the connection to persistence
