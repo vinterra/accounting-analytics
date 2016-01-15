@@ -61,7 +61,8 @@ public abstract class AccountingPersistenceBackendQuery {
 	
 	
 	/**
-	 * Return the list of possible values for a key for a certain usage record type.
+	 * Return the list of possible values for a key for a certain usage record 
+	 * type.
 	 * The result are limited to {@link #KEY_VALUES_LIMIT} value. 
 	 * If you want a different limit please use the 
 	 * {@link #getPossibleValuesForKey(Class, String, int)} function.
@@ -76,9 +77,13 @@ public abstract class AccountingPersistenceBackendQuery {
 	public abstract Set<String> getPossibleValuesForKey(@SuppressWarnings("rawtypes") Class<? extends AggregatedRecord> recordClass, String key) throws Exception;
 	
 	/**
-	 * Return the list of possible values for a key for a certain usage record type
+	 * Return the list of possible values for a key for a certain usage record 
+	 * type.
+	 * The result are limited to limit value. When limit is <= 0 this means
+	 * no limit.
 	 * @param recordClass the usage record type 
-	 * @param key the key 
+	 * @param key the key
+	 * @param limit limit of result to return.
 	 * @return a set containing the list of possible values
 	 * @throws Exception if fails
 	 */
