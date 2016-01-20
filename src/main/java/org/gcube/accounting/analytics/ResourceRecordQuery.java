@@ -172,7 +172,11 @@ public class ResourceRecordQuery {
 	}
 	
 	public List<String> getPossibleValuesForKey(@SuppressWarnings("rawtypes") Class<? extends AggregatedRecord> usageRecordType, String key) throws Exception {
-		Set<String> keys = accountingPersistenceQuery.getPossibleValuesForKey(usageRecordType, key);
+		return getPossibleValuesForKey(usageRecordType, key, AccountingPersistenceBackendQuery.KEY_VALUES_LIMIT);
+	}
+	
+	public List<String> getPossibleValuesForKey(@SuppressWarnings("rawtypes") Class<? extends AggregatedRecord> usageRecordType, String key, int limit) throws Exception {
+		Set<String> keys = accountingPersistenceQuery.getPossibleValuesForKey(usageRecordType, key, limit);
 		List<String> toSort = new ArrayList<String>(keys);
 		Collections.sort(toSort);
 		return toSort;
