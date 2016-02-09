@@ -17,7 +17,6 @@ import org.gcube.accounting.analytics.exception.NoAvailableScopeException;
 import org.gcube.accounting.analytics.exception.NoUsableAccountingPersistenceQueryFound;
 import org.gcube.accounting.analytics.persistence.AccountingPersistenceBackendQuery;
 import org.gcube.accounting.analytics.persistence.AccountingPersistenceBackendQueryFactory;
-import org.gcube.common.scope.api.ScopeProvider;
 import org.gcube.documentstore.records.AggregatedRecord;
 import org.gcube.documentstore.records.Record;
 import org.gcube.documentstore.records.RecordUtility;
@@ -68,19 +67,6 @@ public class ResourceRecordQuery {
 	 * instance which can query in that scope
 	 */
 	public ResourceRecordQuery() throws NoAvailableScopeException, NoUsableAccountingPersistenceQueryFound {
-		this.accountingPersistenceQuery = AccountingPersistenceBackendQueryFactory.getInstance();
-	}
-	
-	/**
-	 * Instantiate the ResourceRecord for the provided scope
-	 * @param scope the scope
-	 * @throws NoAvailableScopeException if there is not possible to query in 
-	 * that scope
-	 * @throws NoUsableAccountingPersistenceQueryFound if there is no available 
-	 * instance which can query in that scope
-	 */
-	public ResourceRecordQuery(String scope) throws NoAvailableScopeException, NoUsableAccountingPersistenceQueryFound {
-		ScopeProvider.instance.set(scope);
 		this.accountingPersistenceQuery = AccountingPersistenceBackendQueryFactory.getInstance();
 	}
 	
