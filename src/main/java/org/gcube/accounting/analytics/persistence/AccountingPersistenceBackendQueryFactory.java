@@ -9,7 +9,7 @@ import java.util.ServiceLoader;
 
 import org.gcube.accounting.analytics.exception.NoAvailableScopeException;
 import org.gcube.accounting.analytics.exception.NoUsableAccountingPersistenceQueryFound;
-import org.gcube.accounting.datamodel.BasicUsageRecord;
+import org.gcube.common.scope.api.ScopeProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,7 +34,8 @@ public abstract class AccountingPersistenceBackendQueryFactory {
 	 * the #AccountingPersistenceQuery
 	 */
 	public synchronized static AccountingPersistenceBackendQuery getInstance() throws NoAvailableScopeException, NoUsableAccountingPersistenceQueryFound {
-		String scope = BasicUsageRecord.getScopeFromToken();
+		//String scope = BasicUsageRecord.getScopeFromToken();
+		String scope = ScopeProvider.instance.get();
 		if(scope==null){
 			throw new NoAvailableScopeException();
 		}
