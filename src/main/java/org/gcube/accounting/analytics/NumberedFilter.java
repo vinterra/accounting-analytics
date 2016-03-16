@@ -6,7 +6,6 @@ package org.gcube.accounting.analytics;
 import java.util.Calendar;
 import java.util.Map;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -16,45 +15,63 @@ import org.json.JSONObject;
 public class NumberedFilter extends Filter {
 
 	protected Double d;
+	protected String orderingProperty;
 	
-	public NumberedFilter(String key, String value, Number n) {
+	public NumberedFilter(String key, String value, Number n, String orderingProperty) {
 		super(key, value);
 		this.d = n.doubleValue();
+		this.orderingProperty = orderingProperty;
 	}
 	
-	public NumberedFilter(Filter filter, Number n) {
-		this(filter.key, filter.value, n);
+	public NumberedFilter(Filter filter, Number n, String orderingProperty) {
+		this(filter.key, filter.value, n, orderingProperty);
 	}
 	
-	public NumberedFilter(Filter filter, Map<Calendar, Info> timeSeries, String orderingProperty) throws JSONException {
+	public NumberedFilter(Filter filter, Map<Calendar, Info> timeSeries, String orderingProperty) throws Exception {
 		super(filter.key, filter.value);
+		
+		this.d = new Double(0);
+		this.orderingProperty = orderingProperty;
 		
 		for(Info info : timeSeries.values()){
 			JSONObject value = info.getValue();
-			
-			if(d == null){
-				d = value.getDouble(orderingProperty);
+			if(this.d == null){
+				this.d = value.getDouble(orderingProperty);
 			}else{
-				d = d + value.getDouble(orderingProperty);
+				this.d = this.d + value.getDouble(orderingProperty);
 			}
 		}
 		
 	}
 	
 	/**
-	 * @return the number
+	 * @return the d
 	 */
-	public Number getNumber() {
+	public Double getDouble() {
 		return d;
 	}
 
 	/**
-	 * @param number the number to set
+	 * @param d the d to set
 	 */
-	public void setNumber(Number n) {
-		this.d = n.doubleValue();
+	public void setDouble(Double d) {
+		this.d = d;
 	}
-	
+
+	/**
+	 * @return the orderingProperty
+	 */
+	public String getOrderingProperty() {
+		return orderingProperty;
+	}
+
+	/**
+	 * @param orderingProperty the orderingProperty to set
+	 */
+	public void setOrderingProperty(String orderingProperty) {
+		this.orderingProperty = orderingProperty;
+	}
+
 	/** {@inheritDoc} */
 	public int compareTo(NumberedFilter numberedFilter) {
 		int compareResult = this.d.compareTo(numberedFilter.d);

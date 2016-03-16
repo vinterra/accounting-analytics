@@ -5,15 +5,16 @@ package org.gcube.accounting.analytics.persistence;
 
 import java.util.Calendar;
 import java.util.List;
-import java.util.Map;
 import java.util.SortedMap;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 import org.gcube.accounting.analytics.Filter;
 import org.gcube.accounting.analytics.Info;
+import org.gcube.accounting.analytics.NumberedFilter;
 import org.gcube.accounting.analytics.TemporalConstraint;
 import org.gcube.accounting.datamodel.UsageRecord;
+import org.gcube.accounting.datamodel.aggregation.AggregatedStorageUsageRecord;
 import org.gcube.documentstore.records.AggregatedRecord;
 import org.gcube.documentstore.records.Record;
 
@@ -59,7 +60,7 @@ public class AccountingPersistenceQuery {
 		return getQuerableKeys(instance);
 	}
 
-	public Map<Calendar, Info> getTimeSeries(
+	public SortedMap<Calendar, Info> getTimeSeries(
 			Class<? extends AggregatedRecord<?,?>> aggregatedRecordClass,
 			TemporalConstraint temporalConstraint, List<Filter> filters)
 			throws Exception {
@@ -68,7 +69,17 @@ public class AccountingPersistenceQuery {
 						filters);
 	}
 
-	public static SortedMap<Filter, Map<Calendar, Info>> getTopValues(
+	public static String getDefaultOrderingProperties(Class<? extends AggregatedRecord<?, ?>> recordClass){
+		if(recordClass.isAssignableFrom(AggregatedStorageUsageRecord.class)){
+			return AggregatedStorageUsageRecord.DATA_VOLUME;
+		}
+		return AggregatedRecord.OPERATION_COUNT;
+	}
+	
+	
+	
+	
+	public static SortedMap<NumberedFilter, SortedMap<Calendar, Info>> getTopValues(
 			Class<? extends AggregatedRecord<?,?>> aggregatedRecordClass,
 			TemporalConstraint temporalConstraint, List<Filter> filters)
 			throws Exception {
@@ -77,7 +88,7 @@ public class AccountingPersistenceQuery {
 						filters);
 	}
 
-	public static SortedSet<Filter> getNextPossibleValues(
+	public static SortedSet<NumberedFilter> getNextPossibleValues(
 			Class<? extends AggregatedRecord<?,?>> aggregatedRecordClass,
 			TemporalConstraint temporalConstraint, List<Filter> filters)
 			throws Exception {
