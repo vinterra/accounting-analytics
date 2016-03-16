@@ -15,6 +15,7 @@ distro/svnpath.txt -text
 /pom.xml -text
 src/main/java/org/gcube/accounting/analytics/Filter.java -text
 src/main/java/org/gcube/accounting/analytics/Info.java -text
+src/main/java/org/gcube/accounting/analytics/NumberedFilter.java -text
 src/main/java/org/gcube/accounting/analytics/ResourceRecordQuery.java -text
 src/main/java/org/gcube/accounting/analytics/TemporalConstraint.java -text
 src/main/java/org/gcube/accounting/analytics/exception/NoAvailableScopeException.java -text
