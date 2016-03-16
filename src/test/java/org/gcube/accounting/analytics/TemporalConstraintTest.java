@@ -4,7 +4,7 @@
 package org.gcube.accounting.analytics;
 
 import java.util.Calendar;
-import java.util.List;
+import java.util.Collection;
 
 import org.gcube.accounting.analytics.TemporalConstraint.AggregationMode;
 import org.junit.Assert;
@@ -82,7 +82,7 @@ public class TemporalConstraintTest {
 				break;
 			}
 			
-			List<Calendar> sequence = temporalConstraint.getCalendarSequence();
+			Collection<Calendar> sequence = temporalConstraint.getCalendarSequence();
 			if(aggregationMode.ordinal()<=AggregationMode.HOURLY.ordinal()){
 				logger.debug("{} generate the following sequence (size {}) {}", 
 						temporalConstraint, sequence.size(), 

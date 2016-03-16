@@ -6,9 +6,12 @@ package org.gcube.accounting.analytics;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.SortedSet;
 import java.util.TimeZone;
+import java.util.TreeSet;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -152,8 +155,8 @@ public class TemporalConstraint {
 		return getAlignedCalendar(endTime, aggregationMode);
 	}
 	
-	public List<Calendar> getCalendarSequence(){
-		List<Calendar> sequence = new ArrayList<Calendar>();
+	public SortedSet<Calendar> getCalendarSequence(){
+		SortedSet<Calendar> sequence = new TreeSet<>();
 		
 		CalendarEnum[] calendarValues = CalendarEnum.values();
 		int calendarValue = calendarValues[aggregationMode.ordinal()].getCalendarValue();
@@ -183,7 +186,7 @@ public class TemporalConstraint {
 	}
 	
 	
-	public static List<String> getSequenceAsStringList(List<Calendar> sequence){
+	public static List<String> getSequenceAsStringList(Collection<Calendar> sequence){
 		List<String> stringSequence = new ArrayList<String>();
 		for(Calendar calendar : sequence){
 			stringSequence.add(timeInMillisToString(calendar.getTimeInMillis()));
