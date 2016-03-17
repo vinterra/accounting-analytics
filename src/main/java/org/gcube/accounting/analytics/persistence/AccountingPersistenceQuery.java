@@ -66,23 +66,7 @@ public class AccountingPersistenceQuery {
 		AggregatedRecord<?,?> instance = aggregatedRecordClass.newInstance();
 		return getQuerableKeys(instance);
 	}
-
-	public static SortedMap<Calendar, Info> getTimeSeries(
-			Class<? extends AggregatedRecord<?,?>> aggregatedRecordClass,
-			TemporalConstraint temporalConstraint, List<Filter> filters, boolean pad)
-			throws Exception {
-		SortedMap<Calendar, Info> ret = 
-				AccountingPersistenceBackendQueryFactory.getInstance()
-				.getTimeSeries(aggregatedRecordClass, temporalConstraint, 
-						filters);
-		
-		if(pad){
-			ret = padMap(ret, temporalConstraint);
-		}
-		
-		return ret;
-	}
-
+	
 	public static String getDefaultOrderingProperties(Class<? extends AggregatedRecord<?, ?>> recordClass){
 		if(recordClass.isAssignableFrom(AggregatedStorageUsageRecord.class)){
 			return AggregatedStorageUsageRecord.DATA_VOLUME;
@@ -133,8 +117,24 @@ public class AccountingPersistenceQuery {
 		}
 		return unpaddedData;
 	}
-	
-	public static SortedMap<NumberedFilter, SortedMap<Calendar, Info>> getTopValues(
+
+	public SortedMap<Calendar, Info> getTimeSeries(
+			Class<? extends AggregatedRecord<?,?>> aggregatedRecordClass,
+			TemporalConstraint temporalConstraint, List<Filter> filters, boolean pad)
+			throws Exception {
+		SortedMap<Calendar, Info> ret = 
+				AccountingPersistenceBackendQueryFactory.getInstance()
+				.getTimeSeries(aggregatedRecordClass, temporalConstraint, 
+						filters);
+		
+		if(pad){
+			ret = padMap(ret, temporalConstraint);
+		}
+		
+		return ret;
+	}
+
+	public SortedMap<NumberedFilter, SortedMap<Calendar, Info>> getTopValues(
 			Class<? extends AggregatedRecord<?,?>> aggregatedRecordClass,
 			TemporalConstraint temporalConstraint, List<Filter> filters, 
 			String orderingProperty, boolean pad, int limit) throws Exception {
@@ -162,7 +162,7 @@ public class AccountingPersistenceQuery {
 		return ret;
 	}
 	
-	public static SortedMap<NumberedFilter, SortedMap<Calendar, Info>> getTopValues(
+	public SortedMap<NumberedFilter, SortedMap<Calendar, Info>> getTopValues(
 			Class<? extends AggregatedRecord<?,?>> aggregatedRecordClass,
 			TemporalConstraint temporalConstraint, List<Filter> filters)
 			throws Exception {
@@ -171,7 +171,7 @@ public class AccountingPersistenceQuery {
 						filters);
 	}
 
-	public static SortedSet<NumberedFilter> getNextPossibleValues(
+	public SortedSet<NumberedFilter> getNextPossibleValues(
 			Class<? extends AggregatedRecord<?,?>> aggregatedRecordClass,
 			TemporalConstraint temporalConstraint, List<Filter> filters)
 			throws Exception {
