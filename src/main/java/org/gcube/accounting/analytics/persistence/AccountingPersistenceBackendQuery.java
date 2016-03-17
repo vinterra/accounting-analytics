@@ -30,7 +30,7 @@ public abstract class AccountingPersistenceBackendQuery {
 	 * #Info is the value. The result is relative to an Usage Record Type,
 	 * respect a TemporalConstraint and can be applied one or more filters.
 	 * 
-	 * @param aggregatedRecordClass
+	 * @param clz
 	 *            the Record Class of interest
 	 * @param temporalConstraint
 	 *            the TemporalConstraint (interval and aggregation)
@@ -47,7 +47,7 @@ public abstract class AccountingPersistenceBackendQuery {
 	 *             if fails
 	 */
 	public abstract SortedMap<Calendar, Info> getTimeSeries(
-			Class<? extends AggregatedRecord<?, ?>> aggregatedRecordClass,
+			Class<? extends AggregatedRecord<?,?>> clz,
 			TemporalConstraint temporalConstraint, List<Filter> filters)
 			throws Exception;
 
@@ -58,7 +58,7 @@ public abstract class AccountingPersistenceBackendQuery {
 	 * an Exception is thrown. The values are ordered from the most occurred
 	 * value.
 	 * 
-	 * @param aggregatedRecordClass
+	 * @param clz
 	 *            the Usage Record Class of interest
 	 * @param temporalConstraint
 	 *            the TemporalConstraint (interval and aggregation)
@@ -77,17 +77,17 @@ public abstract class AccountingPersistenceBackendQuery {
 	 *             if fails
 	 */
 	public SortedMap<NumberedFilter, SortedMap<Calendar, Info>> getTopValues(
-			Class<? extends AggregatedRecord<?, ?>> aggregatedRecordClass,
+			Class<? extends AggregatedRecord<?,?>> clz,
 			TemporalConstraint temporalConstraint, List<Filter> filters)
 			throws Exception {
 		String orderingProperty = AccountingPersistenceQuery
-				.getDefaultOrderingProperties(aggregatedRecordClass);
-		return getTopValues(aggregatedRecordClass, temporalConstraint, filters,
+				.getDefaultOrderingProperties(clz);
+		return getTopValues(clz, temporalConstraint, filters,
 				orderingProperty);
 	}
 
 	public abstract SortedMap<NumberedFilter, SortedMap<Calendar, Info>> getTopValues(
-			Class<? extends AggregatedRecord<?, ?>> aggregatedRecordClass,
+			Class<? extends AggregatedRecord<?,?>> clz,
 			TemporalConstraint temporalConstraint, List<Filter> filters,
 			String orderingProperty) throws Exception;
 
@@ -98,7 +98,7 @@ public abstract class AccountingPersistenceBackendQuery {
 	 * allowed otherwise an Exception is thrown. The values are ordered from the
 	 * most occurred value.
 	 * 
-	 * @param aggregatedRecordClass
+	 * @param clz
 	 *            the Usage Record Class of interest
 	 * @param temporalConstraint
 	 *            the TemporalConstraint (interval and aggregation)
@@ -117,17 +117,17 @@ public abstract class AccountingPersistenceBackendQuery {
 	 *             if fails
 	 */
 	public SortedSet<NumberedFilter> getNextPossibleValues(
-			Class<? extends AggregatedRecord<?, ?>> aggregatedRecordClass,
+			Class<? extends AggregatedRecord<?,?>> clz,
 			TemporalConstraint temporalConstraint, List<Filter> filters)
 			throws Exception {
 		String orderingProperty = AccountingPersistenceQuery
-				.getDefaultOrderingProperties(aggregatedRecordClass);
-		return getNextPossibleValues(aggregatedRecordClass, temporalConstraint,
+				.getDefaultOrderingProperties(clz);
+		return getNextPossibleValues(clz, temporalConstraint,
 				filters, orderingProperty);
 	}
 
 	public abstract SortedSet<NumberedFilter> getNextPossibleValues(
-			Class<? extends AggregatedRecord<?, ?>> aggregatedRecordClass,
+			Class<? extends AggregatedRecord<?, ?>> clz,
 			TemporalConstraint temporalConstraint, List<Filter> filters,
 			String orderingProperty) throws Exception;
 

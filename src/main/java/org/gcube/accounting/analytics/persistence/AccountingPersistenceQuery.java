@@ -61,14 +61,14 @@ public class AccountingPersistenceQuery {
 	}
 
 	public static SortedSet<String> getQuerableKeys(
-			Class<? extends AggregatedRecord<?,?>> aggregatedRecordClass)
+			Class<? extends AggregatedRecord<?,?>> clz)
 			throws Exception {
-		AggregatedRecord<?,?> instance = aggregatedRecordClass.newInstance();
+		AggregatedRecord<?,?> instance = clz.newInstance();
 		return getQuerableKeys(instance);
 	}
 	
-	public static String getDefaultOrderingProperties(Class<? extends AggregatedRecord<?, ?>> recordClass){
-		if(recordClass.isAssignableFrom(AggregatedStorageUsageRecord.class)){
+	public static String getDefaultOrderingProperties(Class<? extends AggregatedRecord<?, ?>> clz){
+		if(clz.isAssignableFrom(AggregatedStorageUsageRecord.class)){
 			return AggregatedStorageUsageRecord.DATA_VOLUME;
 		}
 		return AggregatedRecord.OPERATION_COUNT;
@@ -119,12 +119,12 @@ public class AccountingPersistenceQuery {
 	}
 
 	public SortedMap<Calendar, Info> getTimeSeries(
-			Class<? extends AggregatedRecord<?,?>> aggregatedRecordClass,
-			TemporalConstraint temporalConstraint, List<Filter> filters, boolean pad)
-			throws Exception {
+			Class<? extends AggregatedRecord<?,?>> clz,
+			TemporalConstraint temporalConstraint, List<Filter> filters, 
+			boolean pad) throws Exception {
 		SortedMap<Calendar, Info> ret = 
 				AccountingPersistenceBackendQueryFactory.getInstance()
-				.getTimeSeries(aggregatedRecordClass, temporalConstraint, 
+				.getTimeSeries(clz, temporalConstraint, 
 						filters);
 		
 		if(pad){
@@ -135,18 +135,18 @@ public class AccountingPersistenceQuery {
 	}
 
 	public SortedMap<NumberedFilter, SortedMap<Calendar, Info>> getTopValues(
-			Class<? extends AggregatedRecord<?,?>> aggregatedRecordClass,
+			Class<? extends AggregatedRecord<?,?>> clz,
 			TemporalConstraint temporalConstraint, List<Filter> filters, 
 			String orderingProperty, boolean pad, int limit) throws Exception {
 		
 		SortedMap<NumberedFilter, SortedMap<Calendar, Info>> ret;
 		
 		if(orderingProperty==null){
-			orderingProperty = getDefaultOrderingProperties(aggregatedRecordClass);
+			orderingProperty = getDefaultOrderingProperties(clz);
 		}
 		
 		ret = AccountingPersistenceBackendQueryFactory.getInstance()
-				.getTopValues(aggregatedRecordClass, temporalConstraint,
+				.getTopValues(clz, temporalConstraint,
 				filters, orderingProperty);
 		
 		
@@ -163,20 +163,20 @@ public class AccountingPersistenceQuery {
 	}
 	
 	public SortedMap<NumberedFilter, SortedMap<Calendar, Info>> getTopValues(
-			Class<? extends AggregatedRecord<?,?>> aggregatedRecordClass,
+			Class<? extends AggregatedRecord<?,?>> clz,
 			TemporalConstraint temporalConstraint, List<Filter> filters)
 			throws Exception {
 		return AccountingPersistenceBackendQueryFactory.getInstance()
-				.getTopValues(aggregatedRecordClass, temporalConstraint,
+				.getTopValues(clz, temporalConstraint,
 						filters);
 	}
 
 	public SortedSet<NumberedFilter> getNextPossibleValues(
-			Class<? extends AggregatedRecord<?,?>> aggregatedRecordClass,
+			Class<? extends AggregatedRecord<?,?>> clz,
 			TemporalConstraint temporalConstraint, List<Filter> filters)
 			throws Exception {
 		return AccountingPersistenceBackendQueryFactory.getInstance()
-				.getNextPossibleValues(aggregatedRecordClass,
+				.getNextPossibleValues(clz,
 						temporalConstraint, filters);
 	}
 	
