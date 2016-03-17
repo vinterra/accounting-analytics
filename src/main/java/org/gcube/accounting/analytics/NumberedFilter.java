@@ -72,7 +72,6 @@ public class NumberedFilter extends Filter {
 		this.orderingProperty = orderingProperty;
 	}
 
-	/** {@inheritDoc} */
 	public int compareTo(NumberedFilter numberedFilter) {
 		int compareResult = this.d.compareTo(numberedFilter.d);
 		if(compareResult==0){

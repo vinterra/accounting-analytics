@@ -15,7 +15,7 @@ public class AccountingPersistenceBackendQueryConfiguration extends AccountingPe
 	}
 	
 	/**
-	 * @param persistenceClassName The classname of the persistence to instantiate
+	 * @param clz The class of the persistence to instantiate
 	 * @throws Exception if fails
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
