@@ -67,7 +67,7 @@ public class AccountingPersistenceQuery {
 		return getQuerableKeys(instance);
 	}
 
-	public SortedMap<Calendar, Info> getTimeSeries(
+	public static SortedMap<Calendar, Info> getTimeSeries(
 			Class<? extends AggregatedRecord<?,?>> aggregatedRecordClass,
 			TemporalConstraint temporalConstraint, List<Filter> filters, boolean pad)
 			throws Exception {
