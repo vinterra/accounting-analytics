@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.SortedSet;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 import org.gcube.accounting.analytics.Filter;
@@ -139,22 +140,24 @@ public class AccountingPersistenceQuery {
 			TemporalConstraint temporalConstraint, List<Filter> filters, 
 			String orderingProperty, boolean pad, int limit) throws Exception {
 		
-		SortedMap<NumberedFilter, SortedMap<Calendar, Info>> ret;
+		SortedMap<NumberedFilter, SortedMap<Calendar, Info>> got;
 		
 		if(orderingProperty==null){
 			orderingProperty = getDefaultOrderingProperties(clz);
 		}
 		
-		ret = AccountingPersistenceBackendQueryFactory.getInstance()
+		got = AccountingPersistenceBackendQueryFactory.getInstance()
 				.getTopValues(clz, temporalConstraint,
 				filters, orderingProperty);
 		
+		SortedMap<NumberedFilter, SortedMap<Calendar, Info>> ret = new TreeMap<NumberedFilter, SortedMap<Calendar,Info>>();
 		
 		if(pad){
-			int count = ret.size() > limit ? limit : ret.size();
+			int count = got.size() > limit ? limit : got.size();
 			while(--count >= 0){
-				for(NumberedFilter nf : ret.keySet()){
-					padMap(ret.get(nf), temporalConstraint);
+				for(NumberedFilter nf : got.keySet()){
+					SortedMap<Calendar, Info> m = padMap(got.get(nf), temporalConstraint);
+					ret.put(nf, m);
 				}
 			}
 		}
