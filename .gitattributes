@@ -17,8 +17,11 @@ src/main/java/org/gcube/accounting/analytics/Filter.java -text
 src/main/java/org/gcube/accounting/analytics/Info.java -text
 src/main/java/org/gcube/accounting/analytics/NumberedFilter.java -text
 src/main/java/org/gcube/accounting/analytics/TemporalConstraint.java -text
+src/main/java/org/gcube/accounting/analytics/exception/DuplicatedKeyFilterException.java -text
+src/main/java/org/gcube/accounting/analytics/exception/KeyException.java -text
 src/main/java/org/gcube/accounting/analytics/exception/NoAvailableScopeException.java -text
 src/main/java/org/gcube/accounting/analytics/exception/NoUsableAccountingPersistenceQueryFound.java -text
+src/main/java/org/gcube/accounting/analytics/exception/ValueException.java -text
 src/main/java/org/gcube/accounting/analytics/persistence/AccountingPersistenceBackendQuery.java -text
 src/main/java/org/gcube/accounting/analytics/persistence/AccountingPersistenceBackendQueryConfiguration.java -text
 src/main/java/org/gcube/accounting/analytics/persistence/AccountingPersistenceBackendQueryFactory.java -text

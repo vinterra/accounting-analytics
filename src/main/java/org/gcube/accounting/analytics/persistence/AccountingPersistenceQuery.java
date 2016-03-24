@@ -13,10 +13,15 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import javax.activity.InvalidActivityException;
+
 import org.gcube.accounting.analytics.Filter;
 import org.gcube.accounting.analytics.Info;
 import org.gcube.accounting.analytics.NumberedFilter;
 import org.gcube.accounting.analytics.TemporalConstraint;
+import org.gcube.accounting.analytics.exception.DuplicatedKeyFilterException;
+import org.gcube.accounting.analytics.exception.KeyException;
+import org.gcube.accounting.analytics.exception.ValueException;
 import org.gcube.accounting.datamodel.UsageRecord;
 import org.gcube.accounting.datamodel.aggregation.AggregatedStorageUsageRecord;
 import org.gcube.documentstore.records.AggregatedRecord;
@@ -28,7 +33,7 @@ import org.json.JSONObject;
  * @author Luca Frosini (ISTI - CNR) http://www.lucafrosini.com/
  * 
  */
-public class AccountingPersistenceQuery {
+public class AccountingPersistenceQuery implements AccountingPersistenceBackendQuery {
 
 	private static final AccountingPersistenceQuery accountingPersistenceQuery;
 
@@ -68,7 +73,8 @@ public class AccountingPersistenceQuery {
 		return getQuerableKeys(instance);
 	}
 	
-	public static String getDefaultOrderingProperties(Class<? extends AggregatedRecord<?, ?>> clz){
+	public static String getDefaultOrderingProperties(
+			Class<? extends AggregatedRecord<?, ?>> clz){
 		if(clz.isAssignableFrom(AggregatedStorageUsageRecord.class)){
 			return AggregatedStorageUsageRecord.DATA_VOLUME;
 		}
@@ -118,11 +124,24 @@ public class AccountingPersistenceQuery {
 		}
 		return unpaddedData;
 	}
-
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public SortedMap<Calendar, Info> getTimeSeries(
+			Class<? extends AggregatedRecord<?,?>> clz,
+			TemporalConstraint temporalConstraint, List<Filter> filters) 
+			throws DuplicatedKeyFilterException, KeyException, ValueException, 
+			Exception {
+		
+		return this.getTimeSeries(clz, temporalConstraint, filters, false);
+	}
+	
 	public SortedMap<Calendar, Info> getTimeSeries(
 			Class<? extends AggregatedRecord<?,?>> clz,
 			TemporalConstraint temporalConstraint, List<Filter> filters, 
-			boolean pad) throws Exception {
+			boolean pad) throws DuplicatedKeyFilterException, KeyException, 
+			ValueException, Exception {
 		SortedMap<Calendar, Info> ret = 
 				AccountingPersistenceBackendQueryFactory.getInstance()
 				.getTimeSeries(clz, temporalConstraint, 
@@ -136,9 +155,11 @@ public class AccountingPersistenceQuery {
 	}
 
 	public SortedMap<NumberedFilter, SortedMap<Calendar, Info>> getTopValues(
-			Class<? extends AggregatedRecord<?,?>> clz,
-			TemporalConstraint temporalConstraint, List<Filter> filters, 
-			String orderingProperty, boolean pad, int limit) throws Exception {
+			Class<? extends AggregatedRecord<?, ?>> clz,
+			TemporalConstraint temporalConstraint, List<Filter> filters,
+			String topKey, String orderingProperty, boolean pad, int limit)
+			throws DuplicatedKeyFilterException, KeyException, ValueException,
+			Exception {
 		
 		SortedMap<NumberedFilter, SortedMap<Calendar, Info>> got;
 		
@@ -148,15 +169,17 @@ public class AccountingPersistenceQuery {
 		
 		got = AccountingPersistenceBackendQueryFactory.getInstance()
 				.getTopValues(clz, temporalConstraint,
-				filters, orderingProperty);
+				filters, topKey, orderingProperty);
 		
-		SortedMap<NumberedFilter, SortedMap<Calendar, Info>> ret = new TreeMap<NumberedFilter, SortedMap<Calendar,Info>>();
+		SortedMap<NumberedFilter, SortedMap<Calendar, Info>> ret = 
+				new TreeMap<NumberedFilter, SortedMap<Calendar,Info>>();
 		
 		if(pad){
 			int count = got.size() > limit ? limit : got.size();
 			while(--count >= 0){
 				for(NumberedFilter nf : got.keySet()){
-					SortedMap<Calendar, Info> m = padMap(got.get(nf), temporalConstraint);
+					SortedMap<Calendar, Info> m = 
+							padMap(got.get(nf), temporalConstraint);
 					ret.put(nf, m);
 				}
 			}
@@ -167,31 +190,76 @@ public class AccountingPersistenceQuery {
 	
 	public SortedMap<NumberedFilter, SortedMap<Calendar, Info>> getTopValues(
 			Class<? extends AggregatedRecord<?,?>> clz,
-			TemporalConstraint temporalConstraint, List<Filter> filters)
-			throws Exception {
-		return AccountingPersistenceBackendQueryFactory.getInstance()
-				.getTopValues(clz, temporalConstraint,
-						filters);
+			TemporalConstraint temporalConstraint, List<Filter> filters,
+			String topKey) throws DuplicatedKeyFilterException, 
+			KeyException, ValueException, Exception {
+		String orderingProperty = AccountingPersistenceQuery
+				.getDefaultOrderingProperties(clz);
+		
+		return this.getTopValues(clz, temporalConstraint, filters, topKey, 
+				orderingProperty, false, 0);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SortedMap<NumberedFilter, SortedMap<Calendar, Info>> getTopValues(
+			Class<? extends AggregatedRecord<?,?>> clz,
+			TemporalConstraint temporalConstraint, List<Filter> filters,
+			String topKey, String orderingProperty) throws 
+			DuplicatedKeyFilterException, KeyException, ValueException, 
+			Exception {
+		return this.getTopValues(clz, temporalConstraint, filters, topKey, 
+						orderingProperty, false, 0);
 	}
 
 	public SortedSet<NumberedFilter> getNextPossibleValues(
 			Class<? extends AggregatedRecord<?,?>> clz,
-			TemporalConstraint temporalConstraint, List<Filter> filters)
-			throws Exception {
-		return AccountingPersistenceBackendQueryFactory.getInstance()
-				.getNextPossibleValues(clz,
-						temporalConstraint, filters);
+			TemporalConstraint temporalConstraint, List<Filter> filters,
+			String topKey) throws DuplicatedKeyFilterException, KeyException, 
+			ValueException, Exception {
+		
+		String orderingProperty = AccountingPersistenceQuery
+				.getDefaultOrderingProperties(clz);
+		
+		return this.getNextPossibleValues(clz, temporalConstraint, filters, 
+						topKey, orderingProperty);
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SortedSet<NumberedFilter> getNextPossibleValues(
+			Class<? extends AggregatedRecord<?, ?>> clz,
+			TemporalConstraint temporalConstraint, List<Filter> filters,
+			String topKey, String orderingProperty) throws 
+			DuplicatedKeyFilterException, KeyException, ValueException, 
+			Exception {
+		
+		return AccountingPersistenceBackendQueryFactory.getInstance()
+				.getNextPossibleValues(clz, temporalConstraint, filters, 
+						topKey, orderingProperty);
+		
+	}
 	
 	/**
-	 * Close the connection to persistence
-	 * 
-	 * @throws Exception
-	 *             if the close fails
+	 * {@inheritDoc}
 	 */
+	@Override
 	public void close() throws Exception {
 		AccountingPersistenceBackendQueryFactory.getInstance().close();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void prepareConnection(
+			AccountingPersistenceBackendQueryConfiguration configuration)
+			throws Exception {
+		throw new InvalidActivityException();
+	}
+	
 }

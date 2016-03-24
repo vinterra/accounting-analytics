@@ -12,16 +12,19 @@ import org.gcube.accounting.analytics.Filter;
 import org.gcube.accounting.analytics.Info;
 import org.gcube.accounting.analytics.NumberedFilter;
 import org.gcube.accounting.analytics.TemporalConstraint;
+import org.gcube.accounting.analytics.exception.DuplicatedKeyFilterException;
+import org.gcube.accounting.analytics.exception.KeyException;
+import org.gcube.accounting.analytics.exception.ValueException;
 import org.gcube.documentstore.records.AggregatedRecord;
 
 /**
  * @author Luca Frosini (ISTI - CNR) http://www.lucafrosini.com/
  */
-public abstract class AccountingPersistenceBackendQuery {
+public interface AccountingPersistenceBackendQuery {
 
 	public static final int KEY_VALUES_LIMIT = 25;
 
-	protected abstract void prepareConnection(
+	public void prepareConnection(
 			AccountingPersistenceBackendQueryConfiguration configuration)
 			throws Exception;
 
@@ -43,13 +46,16 @@ public abstract class AccountingPersistenceBackendQuery {
 	 *            than one filter with the same key an Exception is thrown.
 	 * @return the Map containing for each date in the required interval the
 	 *         requested data
+	 * @throws DuplicatedKeyFilterException
+	 * @throws KeyException
+	 * @throws ValueException
 	 * @throws Exception
-	 *             if fails
 	 */
-	public abstract SortedMap<Calendar, Info> getTimeSeries(
-			Class<? extends AggregatedRecord<?,?>> clz,
+	public SortedMap<Calendar, Info> getTimeSeries(
+			Class<? extends AggregatedRecord<?, ?>> clz,
 			TemporalConstraint temporalConstraint, List<Filter> filters)
-			throws Exception;
+			throws DuplicatedKeyFilterException, KeyException, ValueException,
+			Exception;
 
 	/**
 	 * Return a SortedMap containing the TimeSeries for top values for a certain
@@ -63,73 +69,47 @@ public abstract class AccountingPersistenceBackendQuery {
 	 * @param temporalConstraint
 	 *            the TemporalConstraint (interval and aggregation)
 	 * @param filters
-	 *            list of filter to obtain the time series. If null or empty
-	 *            list get all data for the interested Record Class with the
-	 *            applying temporal constraint. All Filter (except one) must
-	 *            have not null and not empty key and value. One Filter must
-	 *            have not null and not empty key and a null value. The filters
-	 *            are must be related to different keys and are in AND. If the
-	 *            list contains more than one filter with the same key an
-	 *            Exception is thrown. If the list contains more than one filter
-	 *            with null value an Exception is thrown.
+	 *            list of filter to obtain the time series of top values. If
+	 *            null or empty list get all data for the interested Record
+	 *            Class with the applying temporal constraint. All Filter must
+	 *            have not null and not empty key and value. The filters are
+	 *            must be related to different keys and are in AND. If the list
+	 *            contains more than one filter with the same key an Exception
+	 *            is thrown.
+	 * @param topKey
+	 * @param orderingProperty
 	 * @return a SortedMap
+	 * @throws DuplicatedKeyFilterException
+	 * @throws KeyException
+	 * @throws ValueException
 	 * @throws Exception
-	 *             if fails
 	 */
-	public SortedMap<NumberedFilter, SortedMap<Calendar, Info>> getTopValues(
-			Class<? extends AggregatedRecord<?,?>> clz,
-			TemporalConstraint temporalConstraint, List<Filter> filters)
-			throws Exception {
-		String orderingProperty = AccountingPersistenceQuery
-				.getDefaultOrderingProperties(clz);
-		return getTopValues(clz, temporalConstraint, filters,
-				orderingProperty);
-	}
-
-	public abstract SortedMap<NumberedFilter, SortedMap<Calendar, Info>> getTopValues(
-			Class<? extends AggregatedRecord<?,?>> clz,
-			TemporalConstraint temporalConstraint, List<Filter> filters,
-			String orderingProperty) throws Exception;
+	public SortedMap<NumberedFilter, SortedMap<Calendar, Info>> 
+			getTopValues(Class<? extends AggregatedRecord<?,?>> clz,
+				TemporalConstraint temporalConstraint, List<Filter> filters,
+				String topKey, String orderingProperty)
+			throws DuplicatedKeyFilterException, KeyException, ValueException, 
+				Exception;
 
 	/**
-	 * Return the list of possible values for a key for a certain usageRecord
-	 * taking in account all Filters. The value for a certain key is identified
-	 * adding a Filter with a null value. Only one Filter with null value is
-	 * allowed otherwise an Exception is thrown. The values are ordered from the
-	 * most occurred value.
 	 * 
 	 * @param clz
-	 *            the Usage Record Class of interest
 	 * @param temporalConstraint
-	 *            the TemporalConstraint (interval and aggregation)
 	 * @param filters
-	 *            list of filter to obtain the time series. If null or empty
-	 *            list get all data for the interested Record Class with the
-	 *            applying temporal constraint. All Filter (except one) must
-	 *            have not null and not empty key and value. One Filter must
-	 *            have not null and not empty key and a null value. The filters
-	 *            are must be related to different keys and are in AND. If the
-	 *            list contains more than one filter with the same key an
-	 *            Exception is thrown. If the list contains more than one filter
-	 *            with null value an Exception is thrown.
-	 * @return a SortedSet containing the list of possible values
+	 * @param topKey
+	 * @param orderingProperty
+	 * @return
+	 * @throws DuplicatedKeyFilterException
+	 * @throws KeyException
+	 * @throws ValueException
 	 * @throws Exception
-	 *             if fails
 	 */
 	public SortedSet<NumberedFilter> getNextPossibleValues(
-			Class<? extends AggregatedRecord<?,?>> clz,
-			TemporalConstraint temporalConstraint, List<Filter> filters)
-			throws Exception {
-		String orderingProperty = AccountingPersistenceQuery
-				.getDefaultOrderingProperties(clz);
-		return getNextPossibleValues(clz, temporalConstraint,
-				filters, orderingProperty);
-	}
-
-	public abstract SortedSet<NumberedFilter> getNextPossibleValues(
 			Class<? extends AggregatedRecord<?, ?>> clz,
 			TemporalConstraint temporalConstraint, List<Filter> filters,
-			String orderingProperty) throws Exception;
+			String topKey, String orderingProperty) throws 
+			DuplicatedKeyFilterException, KeyException, ValueException, 
+			Exception;
 
 	/**
 	 * Close the connection to persistence
@@ -137,6 +117,6 @@ public abstract class AccountingPersistenceBackendQuery {
 	 * @throws Exception
 	 *             if the close fails
 	 */
-	public abstract void close() throws Exception;
+	public void close() throws Exception;
 
 }
