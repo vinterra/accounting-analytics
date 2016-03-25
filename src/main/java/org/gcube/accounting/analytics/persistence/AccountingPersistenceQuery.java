@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.SortedSet;
-import java.util.TreeMap;
 import java.util.TreeSet;
 
 import javax.activity.InvalidActivityException;
@@ -168,24 +167,33 @@ public class AccountingPersistenceQuery implements AccountingPersistenceBackendQ
 		}
 		
 		got = AccountingPersistenceBackendQueryFactory.getInstance()
-				.getTopValues(clz, temporalConstraint,
-				filters, topKey, orderingProperty);
+				.getTopValues(clz, temporalConstraint, filters, topKey, 
+					orderingProperty);
 		
-		SortedMap<NumberedFilter, SortedMap<Calendar, Info>> ret = 
-				new TreeMap<NumberedFilter, SortedMap<Calendar,Info>>();
+
+		int count = got.size() > limit ? limit : got.size();
 		
-		if(pad){
-			int count = got.size() > limit ? limit : got.size();
-			while(--count >= 0){
-				for(NumberedFilter nf : got.keySet()){
-					SortedMap<Calendar, Info> m = 
-							padMap(got.get(nf), temporalConstraint);
-					ret.put(nf, m);
+		NumberedFilter firstRemovalKey = null;
+		
+		for(NumberedFilter nf : got.keySet()){
+			if(--count>=0 || limit<=0){
+				if(pad){
+					padMap(got.get(nf), temporalConstraint);
+				}
+			}else{
+				if(firstRemovalKey==null){
+					firstRemovalKey = nf;
+				}else{
+					break;
 				}
 			}
 		}
 		
-		return ret;
+		if(firstRemovalKey!=null){
+			return got.subMap(got.firstKey(), firstRemovalKey);
+		}
+		
+		return got;
 	}
 	
 	public SortedMap<NumberedFilter, SortedMap<Calendar, Info>> getTopValues(
