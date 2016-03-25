@@ -112,8 +112,9 @@ public class NumberedFilter extends Filter {
 	
 	@Override
 	public String toString(){
-		return String.format("%s, %d, %s}", 
-				super.toString().replace(" }", ""), d.longValue(), orderingProperty);
+		return String.format("%s, %s : %d}", 
+				super.toString().replace(" }", ""), 
+				orderingProperty, d.longValue());
 	}
 	
 }
