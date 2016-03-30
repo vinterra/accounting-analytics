@@ -225,14 +225,14 @@ public class AccountingPersistenceQuery implements AccountingPersistenceBackendQ
 	public SortedSet<NumberedFilter> getNextPossibleValues(
 			Class<? extends AggregatedRecord<?,?>> clz,
 			TemporalConstraint temporalConstraint, List<Filter> filters,
-			String topKey) throws DuplicatedKeyFilterException, KeyException, 
+			String key) throws DuplicatedKeyFilterException, KeyException, 
 			ValueException, Exception {
 		
 		String orderingProperty = AccountingPersistenceQuery
 				.getDefaultOrderingProperties(clz);
 		
 		return this.getNextPossibleValues(clz, temporalConstraint, filters, 
-						topKey, orderingProperty);
+						key, orderingProperty);
 	}
 	
 	/**
@@ -242,13 +242,13 @@ public class AccountingPersistenceQuery implements AccountingPersistenceBackendQ
 	public SortedSet<NumberedFilter> getNextPossibleValues(
 			Class<? extends AggregatedRecord<?, ?>> clz,
 			TemporalConstraint temporalConstraint, List<Filter> filters,
-			String topKey, String orderingProperty) throws 
+			String key, String orderingProperty) throws 
 			DuplicatedKeyFilterException, KeyException, ValueException, 
 			Exception {
 		
 		return AccountingPersistenceBackendQueryFactory.getInstance()
 				.getNextPossibleValues(clz, temporalConstraint, filters, 
-						topKey, orderingProperty);
+						key, orderingProperty);
 		
 	}
 	

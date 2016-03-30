@@ -96,7 +96,7 @@ public interface AccountingPersistenceBackendQuery {
 	 * @param clz
 	 * @param temporalConstraint
 	 * @param filters
-	 * @param topKey
+	 * @param key
 	 * @param orderingProperty
 	 * @return
 	 * @throws DuplicatedKeyFilterException
@@ -107,7 +107,7 @@ public interface AccountingPersistenceBackendQuery {
 	public SortedSet<NumberedFilter> getNextPossibleValues(
 			Class<? extends AggregatedRecord<?, ?>> clz,
 			TemporalConstraint temporalConstraint, List<Filter> filters,
-			String topKey, String orderingProperty) throws 
+			String key, String orderingProperty) throws 
 			DuplicatedKeyFilterException, KeyException, ValueException, 
 			Exception;
 
