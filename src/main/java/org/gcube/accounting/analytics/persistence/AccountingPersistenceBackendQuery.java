@@ -5,7 +5,6 @@ package org.gcube.accounting.analytics.persistence;
 
 import java.util.Calendar;
 import java.util.List;
-import java.util.Map;
 import java.util.SortedMap;
 import java.util.SortedSet;
 
