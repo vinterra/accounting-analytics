@@ -20,7 +20,8 @@ public class NoUsableAccountingPersistenceQueryFound extends Exception {
      * call to {@link #initCause}.
      */
 	public NoUsableAccountingPersistenceQueryFound() {
-		super();
+		super("No Usable Accounting Persistence Query Found");
+		
 	}
 
 	/**

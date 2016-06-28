@@ -5,6 +5,7 @@ package org.gcube.accounting.analytics.persistence;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedMap;
 import java.util.SortedSet;
 
@@ -16,6 +17,7 @@ import org.gcube.accounting.analytics.exception.DuplicatedKeyFilterException;
 import org.gcube.accounting.analytics.exception.KeyException;
 import org.gcube.accounting.analytics.exception.ValueException;
 import org.gcube.documentstore.records.AggregatedRecord;
+import org.json.JSONObject;
 
 /**
  * @author Luca Frosini (ISTI - CNR) http://www.lucafrosini.com/
@@ -26,7 +28,7 @@ public interface AccountingPersistenceBackendQuery {
 
 	public void prepareConnection(
 			AccountingPersistenceBackendQueryConfiguration configuration)
-			throws Exception;
+					throws Exception;
 
 	/**
 	 * Query the persistence obtaining a Map where the date is the key and the
@@ -53,9 +55,12 @@ public interface AccountingPersistenceBackendQuery {
 	 */
 	public SortedMap<Calendar, Info> getTimeSeries(
 			Class<? extends AggregatedRecord<?, ?>> clz,
-			TemporalConstraint temporalConstraint, List<Filter> filters)
-			throws DuplicatedKeyFilterException, KeyException, ValueException,
-			Exception;
+					TemporalConstraint temporalConstraint, List<Filter> filters)
+							throws DuplicatedKeyFilterException, KeyException, ValueException,
+							Exception;
+
+
+
 
 	/**
 	 * Return a SortedMap containing the TimeSeries for top values for a certain
@@ -85,11 +90,11 @@ public interface AccountingPersistenceBackendQuery {
 	 * @throws Exception
 	 */
 	public SortedMap<NumberedFilter, SortedMap<Calendar, Info>> 
-			getTopValues(Class<? extends AggregatedRecord<?,?>> clz,
-				TemporalConstraint temporalConstraint, List<Filter> filters,
-				String topKey, String orderingProperty)
-			throws DuplicatedKeyFilterException, KeyException, ValueException, 
-				Exception;
+	getTopValues(Class<? extends AggregatedRecord<?,?>> clz,
+			TemporalConstraint temporalConstraint, List<Filter> filters,
+			String topKey, String orderingProperty)
+					throws DuplicatedKeyFilterException, KeyException, ValueException, 
+					Exception;
 
 	/**
 	 * 
@@ -106,10 +111,10 @@ public interface AccountingPersistenceBackendQuery {
 	 */
 	public SortedSet<NumberedFilter> getNextPossibleValues(
 			Class<? extends AggregatedRecord<?, ?>> clz,
-			TemporalConstraint temporalConstraint, List<Filter> filters,
-			String key, String orderingProperty) throws 
-			DuplicatedKeyFilterException, KeyException, ValueException, 
-			Exception;
+					TemporalConstraint temporalConstraint, List<Filter> filters,
+					String key, String orderingProperty) throws 
+					DuplicatedKeyFilterException, KeyException, ValueException, 
+					Exception;
 
 	/**
 	 * Close the connection to persistence
@@ -118,5 +123,49 @@ public interface AccountingPersistenceBackendQuery {
 	 *             if the close fails
 	 */
 	public void close() throws Exception;
+
+
+
+	/**
+	 * Return a sortedSet filter value
+	 * 
+	 * 
+	 * @param clz
+	 * @param temporalConstraint
+	 * @param filters
+	 * @param key
+	 * @param orderingProperty
+	 * @return
+	 * @throws DuplicatedKeyFilterException
+	 * @throws KeyException
+	 * @throws ValueException
+	 * @throws Exception
+	 */
+	public SortedSet<NumberedFilter> getFilterValues(
+			Class<? extends AggregatedRecord<?, ?>> clz,
+					TemporalConstraint temporalConstraint, List<Filter> filters,
+					String key) throws Exception;
+
+
+	/**
+	 * Return a JsonObject with value
+	 * e.g.for StorageUsageRecord {"dataVolume":1860328,"operationCount":4115}
+	 * e.g. for ServiceUsageRcord {"operationCount":1651624}
+	 * 
+	 * @param clz 
+	 * 				the Usage Record Class of interest
+	 * @param temporalConstraint 
+	 * 				the TemporalConstraint (interval and aggregation)
+	 * @param applicant 
+	 * 				the type field and value 
+	 * @return
+	 * @throws Exception
+	 */
+	public JSONObject getUsageValue(Class<? extends AggregatedRecord<?, ?>> clz,
+			TemporalConstraint temporalConstraint, Filter applicant)
+					throws Exception;
+
+	
+
 
 }
