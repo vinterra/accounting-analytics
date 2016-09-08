@@ -7,7 +7,7 @@
   </appender>
   
   
-  <logger name="org.gcube" level="TRACE" />
+  <logger name="org.gcube" level="DEBUG" />
 
   <root level="WARN">
     <appender-ref ref="STDOUT" />

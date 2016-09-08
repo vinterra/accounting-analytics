@@ -168,10 +168,6 @@ public class AccountingPersistenceQuery implements AccountingPersistenceBackendQ
 					String topKey, String orderingProperty, boolean pad, int limit)
 							throws DuplicatedKeyFilterException, KeyException, ValueException,
 							Exception {
-
-
-
-
 		SortedMap<NumberedFilter, SortedMap<Calendar, Info>> got;
 
 		if(orderingProperty==null){
@@ -182,15 +178,13 @@ public class AccountingPersistenceQuery implements AccountingPersistenceBackendQ
 				.getTopValues(clz, temporalConstraint, filters, topKey, 
 						orderingProperty);
 
-
 		int count = got.size() > limit ? limit : got.size();
-
 		NumberedFilter firstRemovalKey = null;
-
 		for(NumberedFilter nf : got.keySet()){
 			if(--count>=0 || limit<=0){
 				if(pad){
-					padMap(got.get(nf), temporalConstraint);
+						padMap(got.get(nf), temporalConstraint);
+					
 				}
 			}else{
 				if(firstRemovalKey==null){
@@ -200,11 +194,9 @@ public class AccountingPersistenceQuery implements AccountingPersistenceBackendQ
 				}
 			}
 		}
-
 		if(firstRemovalKey!=null){
 			return got.subMap(got.firstKey(), firstRemovalKey);
 		}
-
 		return got;
 	}
 

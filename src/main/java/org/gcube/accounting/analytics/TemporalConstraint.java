@@ -162,11 +162,11 @@ public class TemporalConstraint {
 		int calendarValue = calendarValues[aggregationMode.ordinal()].getCalendarValue();
 		
 		Calendar alignedStartTime = getAlignedStartTime();
-		logger.trace("Aligned StartTime : {}", timeInMillisToString(alignedStartTime.getTimeInMillis()));
+		//logger.trace("Aligned StartTime : {}", timeInMillisToString(alignedStartTime.getTimeInMillis()));
 		
 		Calendar alignedEndTime = getAlignedEndTime();
 		long alignedEndTimeInMillis = alignedEndTime.getTimeInMillis();
-		logger.trace("Aligned EndTime : {}", timeInMillisToString(alignedEndTime.getTimeInMillis()));
+		//logger.trace("Aligned EndTime : {}", timeInMillisToString(alignedEndTime.getTimeInMillis()));
 		
 		Calendar progressTime = Calendar.getInstance();
 		progressTime.setTimeZone(DEFAULT_TIME_ZONE);

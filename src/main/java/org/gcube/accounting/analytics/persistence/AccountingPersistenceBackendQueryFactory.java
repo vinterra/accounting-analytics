@@ -41,6 +41,7 @@ public abstract class AccountingPersistenceBackendQueryFactory {
 		}
 		
 		AccountingPersistenceBackendQuery accountingPersistenceQuery = accountingPersistenceQueries.get(scope);
+		logger.debug("Scope {}", scope);
 		if(accountingPersistenceQuery==null){
 		
 			try {
@@ -49,24 +50,26 @@ public abstract class AccountingPersistenceBackendQueryFactory {
 					Class<? extends AccountingPersistenceBackendQuery> foundClass=null;
 					try {
 						foundClass = found.getClass();
+						logger.debug("Testing foundClass{}", foundClass.toString());
 						String foundClassName = foundClass.getSimpleName();
-						logger.debug("Testing {}", foundClassName);
+						logger.debug("Testing foundClassName{}", foundClassName);
 						AccountingPersistenceBackendQueryConfiguration configuration = new AccountingPersistenceBackendQueryConfiguration(foundClass);
 						found.prepareConnection(configuration);
 						accountingPersistenceQuery = found;
 						break;
 					} catch (Exception e) {
-						logger.error(String.format("%s not initialized correctly. It will not be used", foundClass.getSimpleName()));
-					
+						logger.error(String.format("%s not initialized correctly. It will not be used", foundClass.getSimpleName()),e);
+						e.printStackTrace();
 					}
 				}
 			} catch(Exception e){
 				logger.error(String.format("service loader or  not initialized correctly."));
+				e.printStackTrace();
 				throw new NoUsableAccountingPersistenceQueryFound(e.getLocalizedMessage());
 			}
 			
 			if(accountingPersistenceQuery==null){
-				logger.error(String.format("accountingPersistenceQuery null"));
+				logger.error(String.format("accountingPersistenceQuery null"));				
 				throw new NoUsableAccountingPersistenceQueryFound();
 			}
 			

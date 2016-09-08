@@ -4,6 +4,9 @@
 .settings/org.eclipse.core.resources.prefs -text
 .settings/org.eclipse.jdt.core.prefs -text
 .settings/org.eclipse.m2e.core.prefs -text
+.settings/org.eclipse.wst.common.component -text
+.settings/org.eclipse.wst.common.project.facet.core.xml -text
+.settings/org.eclipse.wst.validation.prefs -text
 distro/LICENSE -text
 distro/README -text
 distro/changelog.xml -text
@@ -24,5 +27,5 @@ src/main/java/org/gcube/accounting/analytics/persistence/AccountingPersistenceBa
 src/main/java/org/gcube/accounting/analytics/persistence/AccountingPersistenceBackendQueryFactory.java -text
 src/main/java/org/gcube/accounting/analytics/persistence/AccountingPersistenceQuery.java -text
 src/main/java/org/gcube/accounting/analytics/persistence/AccountingPersistenceQueryFactory.java -text
+src/main/resources/logback-test.xml -text
 src/test/java/org/gcube/accounting/analytics/TemporalConstraintTest.java -text
-src/test/resources/logback-test.xml -text
