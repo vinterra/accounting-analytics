@@ -11,7 +11,6 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.SortedSet;
 import java.util.TreeMap;
-import java.util.TreeSet;
 
 import javax.activity.InvalidActivityException;
 
@@ -22,10 +21,8 @@ import org.gcube.accounting.analytics.TemporalConstraint;
 import org.gcube.accounting.analytics.exception.DuplicatedKeyFilterException;
 import org.gcube.accounting.analytics.exception.KeyException;
 import org.gcube.accounting.analytics.exception.ValueException;
-import org.gcube.accounting.datamodel.UsageRecord;
 import org.gcube.accounting.datamodel.aggregation.AggregatedStorageUsageRecord;
 import org.gcube.documentstore.records.AggregatedRecord;
-import org.gcube.documentstore.records.Record;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -50,27 +47,18 @@ public class AccountingPersistenceQuery implements AccountingPersistenceBackendQ
 		return accountingPersistenceQuery;
 	}
 
+	@Deprecated
 	public static SortedSet<String> getQuerableKeys(
 			@SuppressWarnings("rawtypes") AggregatedRecord instance)
 					throws Exception {
-		SortedSet<String> properties = new TreeSet<>(
-				instance.getRequiredFields());
-
-		properties.removeAll(instance.getAggregatedFields());
-		properties.removeAll(instance.getComputedFields());
-		properties.remove(Record.ID);
-		properties.remove(Record.CREATION_TIME);
-		properties.remove(Record.RECORD_TYPE);
-		properties.remove(UsageRecord.SCOPE);
-
-		return properties;
+		return instance.getQuerableKeys();
 	}
 
 	public static SortedSet<String> getQuerableKeys(
 			Class<? extends AggregatedRecord<?,?>> clz)
 					throws Exception {
 		AggregatedRecord<?,?> instance = clz.newInstance();
-		return getQuerableKeys(instance);
+		return instance.getQuerableKeys();
 	}
 
 	public static String getDefaultOrderingProperties(
