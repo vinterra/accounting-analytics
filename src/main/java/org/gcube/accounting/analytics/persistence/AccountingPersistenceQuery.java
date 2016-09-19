@@ -84,7 +84,6 @@ public class AccountingPersistenceQuery implements AccountingPersistenceBackendQ
 				jsonObject.put(key, 0);
 			}
 		}
-		
 		return jsonObject;
 	}
 
@@ -171,8 +170,8 @@ public class AccountingPersistenceQuery implements AccountingPersistenceBackendQ
 		for(NumberedFilter nf : got.keySet()){
 			if(--count>=0 || limit<=0){
 				if(pad){
-						padMap(got.get(nf), temporalConstraint);
-					
+					padMap(got.get(nf), temporalConstraint);
+
 				}
 			}else{
 				if(firstRemovalKey==null){
@@ -279,7 +278,7 @@ public class AccountingPersistenceQuery implements AccountingPersistenceBackendQ
 	@Override
 	public JSONObject getUsageValue(Class<? extends AggregatedRecord<?, ?>> clz,
 			TemporalConstraint temporalConstraint, Filter applicant)
-			throws Exception {
+					throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
