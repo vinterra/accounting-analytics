@@ -280,7 +280,8 @@ public class AccountingPersistenceQuery implements AccountingPersistenceBackendQ
 			TemporalConstraint temporalConstraint, Filter applicant)
 					throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return AccountingPersistenceBackendQueryFactory.getInstance()
+				.getUsageValue(clz, temporalConstraint, applicant);
 	}
 
 }
