@@ -17,7 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author Luca Frosini (ISTI - CNR) http://www.lucafrosini.com/
+ * @author Luca Frosini (ISTI - CNR)
  *
  */
 public class TemporalConstraint {
@@ -30,7 +30,7 @@ public class TemporalConstraint {
 	
 	/**
 	 * Valid Aggregation Mode
-	 * @author Luca Frosini (ISTI - CNR) http://www.lucafrosini.com/
+	 * @author Luca Frosini (ISTI - CNR)
 	 */
 	public enum AggregationMode {
 		YEARLY, MONTHLY, DAILY, HOURLY, MINUTELY, SECONDLY, MILLISECONDLY  
@@ -39,7 +39,7 @@ public class TemporalConstraint {
 	/**
 	 * Used to map the Calendar constant to an enum value which has the same
 	 * ordinal of {@link AggregationMode} 
-	 * @author Luca Frosini (ISTI - CNR) http://www.lucafrosini.com/
+	 * @author Luca Frosini (ISTI - CNR)
 	 */
 	public enum CalendarEnum {
 		YEAR(Calendar.YEAR),

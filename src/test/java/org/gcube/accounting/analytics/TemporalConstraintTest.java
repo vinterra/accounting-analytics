@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author Luca Frosini (ISTI - CNR) http://www.lucafrosini.com/
+ * @author Luca Frosini (ISTI - CNR)
  *
  */
 public class TemporalConstraintTest {

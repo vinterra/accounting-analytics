@@ -4,7 +4,7 @@
 package org.gcube.accounting.analytics;
 
 /**
- * @author Luca Frosini (ISTI - CNR) http://www.lucafrosini.com/
+ * @author Luca Frosini (ISTI - CNR)
  *
  */
 public class Filter implements Comparable<Filter> {

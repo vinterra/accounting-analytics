@@ -10,7 +10,7 @@ import org.json.JSONObject;
 
 
 /**
- * @author Luca Frosini (ISTI - CNR) http://www.lucafrosini.com/
+ * @author Luca Frosini (ISTI - CNR)
  *
  */
 public class Info {

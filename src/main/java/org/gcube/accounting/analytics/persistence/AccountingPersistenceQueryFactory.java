@@ -5,7 +5,7 @@ package org.gcube.accounting.analytics.persistence;
 
 
 /**
- * @author Luca Frosini (ISTI - CNR) http://www.lucafrosini.com/
+ * @author Luca Frosini (ISTI - CNR)
  *
  */
 public class AccountingPersistenceQueryFactory {
