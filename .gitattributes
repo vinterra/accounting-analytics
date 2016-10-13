@@ -18,6 +18,7 @@ src/main/java/org/gcube/accounting/analytics/Filters.java -text
 src/main/java/org/gcube/accounting/analytics/Info.java -text
 src/main/java/org/gcube/accounting/analytics/NumberedFilter.java -text
 src/main/java/org/gcube/accounting/analytics/TemporalConstraint.java -text
+src/main/java/org/gcube/accounting/analytics/TotalFilters.java -text
 src/main/java/org/gcube/accounting/analytics/exception/DuplicatedKeyFilterException.java -text
 src/main/java/org/gcube/accounting/analytics/exception/KeyException.java -text
 src/main/java/org/gcube/accounting/analytics/exception/NoAvailableScopeException.java -text

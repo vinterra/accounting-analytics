@@ -3,7 +3,6 @@
  */
 package org.gcube.accounting.analytics.persistence;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.SortedMap;
@@ -14,6 +13,7 @@ import org.gcube.accounting.analytics.Filters;
 import org.gcube.accounting.analytics.Info;
 import org.gcube.accounting.analytics.NumberedFilter;
 import org.gcube.accounting.analytics.TemporalConstraint;
+import org.gcube.accounting.analytics.TotalFilters;
 import org.gcube.accounting.analytics.exception.DuplicatedKeyFilterException;
 import org.gcube.accounting.analytics.exception.KeyException;
 import org.gcube.accounting.analytics.exception.ValueException;
@@ -168,10 +168,8 @@ public interface AccountingPersistenceBackendQuery {
 
 	
 	/**
-	 * Return a JsonObject with value
-	 * e.g.for StorageUsageRecord {Storage:["dataVolume":1860328,"operationCount":4115]}
-	 * e.g. for ServiceUsageRcord {NameService1:["operationCount":1651624],NameService2:["operationCount":1651624],}
-	 * e.g. for TaskUsageRcord {NameTask1:["operationCount":1651624],NameTask1:["operationCount":1651624],}
+	 * in:[{ "consumerId" : "alessandro.pieve" }, { "serviceClass" : "DataAccess" }, { "serviceName" : "CkanConnector" }], d=null, orderingProperty=null]
+	 * out:[{ "consumerId" : "alessandro.pieve" }, { "serviceClass" : "DataAccess" }, { "serviceName" : "CkanConnector" }], d=88.0, orderingProperty=operationCount]
 	 * @param clz 
 	 * 				the Usage Record Class of interest
 	 * @param temporalConstraint 
@@ -186,6 +184,20 @@ public interface AccountingPersistenceBackendQuery {
 	public List<Filters> getUsageValueQuota(Class<? extends AggregatedRecord<?, ?>> clz,
 			TemporalConstraint temporalConstraint,
 			List<Filters> filterPackageQuota) throws Exception;
+
+	
+	/**
+	 * 
+	 * @param clz
+	 * @param temporalConstraint
+	 * @param listUsage
+	 * @return
+	 * @throws Exception
+	 */
+	public List<TotalFilters> getUsageValueQuotaTotal(
+			Class<? extends AggregatedRecord<?, ?>> clz,
+			TemporalConstraint temporalConstraint, List<TotalFilters> listUsage)
+			throws Exception;
 
 	
 

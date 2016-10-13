@@ -19,6 +19,7 @@ import org.gcube.accounting.analytics.Filters;
 import org.gcube.accounting.analytics.Info;
 import org.gcube.accounting.analytics.NumberedFilter;
 import org.gcube.accounting.analytics.TemporalConstraint;
+import org.gcube.accounting.analytics.TotalFilters;
 import org.gcube.accounting.analytics.exception.DuplicatedKeyFilterException;
 import org.gcube.accounting.analytics.exception.KeyException;
 import org.gcube.accounting.analytics.exception.ValueException;
@@ -291,10 +292,18 @@ public class AccountingPersistenceQuery implements AccountingPersistenceBackendQ
 			TemporalConstraint temporalConstraint, List<Filters> listUsage)
 					throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return AccountingPersistenceBackendQueryFactory.getInstance()
+				.getUsageValueQuota(clz, temporalConstraint, listUsage);
 	}
 
-	
+	@Override
+	public List<TotalFilters> getUsageValueQuotaTotal(Class<? extends AggregatedRecord<?, ?>> clz,
+			TemporalConstraint temporalConstraint, List<TotalFilters> listUsage)
+					throws Exception {
+		// TODO Auto-generated method stub
+		return AccountingPersistenceBackendQueryFactory.getInstance()
+				.getUsageValueQuotaTotal(clz, temporalConstraint, listUsage);
+	}
 	
 
 }
