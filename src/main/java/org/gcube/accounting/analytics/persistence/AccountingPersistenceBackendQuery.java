@@ -3,12 +3,14 @@
  */
 package org.gcube.accounting.analytics.persistence;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.SortedMap;
 import java.util.SortedSet;
 
 import org.gcube.accounting.analytics.Filter;
+import org.gcube.accounting.analytics.Filters;
 import org.gcube.accounting.analytics.Info;
 import org.gcube.accounting.analytics.NumberedFilter;
 import org.gcube.accounting.analytics.TemporalConstraint;
@@ -163,6 +165,29 @@ public interface AccountingPersistenceBackendQuery {
 	public JSONObject getUsageValue(Class<? extends AggregatedRecord<?, ?>> clz,
 			TemporalConstraint temporalConstraint, Filter applicant)
 					throws Exception;
+
+	
+	/**
+	 * Return a JsonObject with value
+	 * e.g.for StorageUsageRecord {Storage:["dataVolume":1860328,"operationCount":4115]}
+	 * e.g. for ServiceUsageRcord {NameService1:["operationCount":1651624],NameService2:["operationCount":1651624],}
+	 * e.g. for TaskUsageRcord {NameTask1:["operationCount":1651624],NameTask1:["operationCount":1651624],}
+	 * @param clz 
+	 * 				the Usage Record Class of interest
+	 * @param temporalConstraint 
+	 * 				the TemporalConstraint (interval and aggregation)
+	 * @param applicant 
+	 * 				the type field and value 
+	 * @parm list 
+	 * 				the list of service or task what you want
+	 * @return
+	 * @throws Exception
+	 */
+	public List<Filters> getUsageValueQuota(Class<? extends AggregatedRecord<?, ?>> clz,
+			TemporalConstraint temporalConstraint,
+			List<Filters> filterPackageQuota) throws Exception;
+
+	
 
 	
 

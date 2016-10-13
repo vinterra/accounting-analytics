@@ -14,6 +14,7 @@ distro/descriptor.xml -text
 distro/profile.xml -text
 /pom.xml -text
 src/main/java/org/gcube/accounting/analytics/Filter.java -text
+src/main/java/org/gcube/accounting/analytics/Filters.java -text
 src/main/java/org/gcube/accounting/analytics/Info.java -text
 src/main/java/org/gcube/accounting/analytics/NumberedFilter.java -text
 src/main/java/org/gcube/accounting/analytics/TemporalConstraint.java -text

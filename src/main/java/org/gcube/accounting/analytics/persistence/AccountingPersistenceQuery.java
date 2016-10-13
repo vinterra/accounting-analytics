@@ -15,6 +15,7 @@ import java.util.TreeMap;
 import javax.activity.InvalidActivityException;
 
 import org.gcube.accounting.analytics.Filter;
+import org.gcube.accounting.analytics.Filters;
 import org.gcube.accounting.analytics.Info;
 import org.gcube.accounting.analytics.NumberedFilter;
 import org.gcube.accounting.analytics.TemporalConstraint;
@@ -283,5 +284,17 @@ public class AccountingPersistenceQuery implements AccountingPersistenceBackendQ
 		return AccountingPersistenceBackendQueryFactory.getInstance()
 				.getUsageValue(clz, temporalConstraint, applicant);
 	}
+	
+	/*New task for quota*/
+	@Override
+	public List<Filters> getUsageValueQuota(Class<? extends AggregatedRecord<?, ?>> clz,
+			TemporalConstraint temporalConstraint, List<Filters> listUsage)
+					throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+	
 
 }
