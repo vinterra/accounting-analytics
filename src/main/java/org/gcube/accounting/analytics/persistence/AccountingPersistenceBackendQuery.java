@@ -200,8 +200,17 @@ public interface AccountingPersistenceBackendQuery {
 			throws Exception;
 
 	
-
-	
-
+	/**
+	 * Return a SortedMap containing the TimeSeries for each context.
+	 * @param clz
+	 * @param temporalConstraint
+	 * @param filters
+	 * @param contexts
+	 * @return
+	 */
+	public SortedMap<Filter, SortedMap<Calendar, Info>> getContextTimeSeries(
+			Class<? extends AggregatedRecord<?, ?>> clz,
+			TemporalConstraint temporalConstraint, List<Filter> filters,List<String> contexts)
+			throws Exception;
 
 }

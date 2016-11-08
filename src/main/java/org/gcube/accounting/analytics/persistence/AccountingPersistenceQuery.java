@@ -271,7 +271,7 @@ public class AccountingPersistenceQuery implements AccountingPersistenceBackendQ
 			Class<? extends AggregatedRecord<?, ?>> clz,
 					TemporalConstraint temporalConstraint, List<Filter> filters,
 					String key) throws Exception {
-		// TODO Auto-generated method stub
+		
 		return AccountingPersistenceBackendQueryFactory.getInstance()
 				.getFilterValues(clz, temporalConstraint, filters, 
 						key);
@@ -281,17 +281,17 @@ public class AccountingPersistenceQuery implements AccountingPersistenceBackendQ
 	public JSONObject getUsageValue(Class<? extends AggregatedRecord<?, ?>> clz,
 			TemporalConstraint temporalConstraint, Filter applicant)
 					throws Exception {
-		// TODO Auto-generated method stub
+		
 		return AccountingPersistenceBackendQueryFactory.getInstance()
 				.getUsageValue(clz, temporalConstraint, applicant);
 	}
-	
+
 	/*New task for quota*/
 	@Override
 	public List<Filters> getUsageValueQuota(Class<? extends AggregatedRecord<?, ?>> clz,
 			TemporalConstraint temporalConstraint, List<Filters> listUsage)
 					throws Exception {
-		// TODO Auto-generated method stub
+		
 		return AccountingPersistenceBackendQueryFactory.getInstance()
 				.getUsageValueQuota(clz, temporalConstraint, listUsage);
 	}
@@ -300,10 +300,55 @@ public class AccountingPersistenceQuery implements AccountingPersistenceBackendQ
 	public List<TotalFilters> getUsageValueQuotaTotal(Class<? extends AggregatedRecord<?, ?>> clz,
 			TemporalConstraint temporalConstraint, List<TotalFilters> listUsage)
 					throws Exception {
-		// TODO Auto-generated method stub
+		
 		return AccountingPersistenceBackendQueryFactory.getInstance()
 				.getUsageValueQuotaTotal(clz, temporalConstraint, listUsage);
 	}
-	
+
+
+
+	@Override
+	public SortedMap<Filter, SortedMap<Calendar, Info>> getContextTimeSeries(
+			Class<? extends AggregatedRecord<?, ?>> clz,
+					TemporalConstraint temporalConstraint, List<Filter> filters,List<String> contexts) 
+							throws Exception {
+		
+		return AccountingPersistenceBackendQueryFactory.getInstance()
+				.getContextTimeSeries(clz, temporalConstraint, filters, contexts);
+	}
+
+
+	public SortedMap<Filter, SortedMap<Calendar, Info>> getContextTimeSeries(
+			Class<? extends AggregatedRecord<?, ?>> clz,
+					TemporalConstraint temporalConstraint, List<Filter> filters,
+					List<String> contexts, boolean pad)
+							throws DuplicatedKeyFilterException, 
+							Exception {
+		SortedMap<Filter, SortedMap<Calendar, Info>> got;
+		got =  AccountingPersistenceBackendQueryFactory.getInstance()
+				.getContextTimeSeries(clz, temporalConstraint, filters, contexts);
+		int count = got.size();
+		Filter firstRemovalKey = null;
+		for(Filter nf : got.keySet()){
+			if(--count>=0){
+				if(pad){
+					padMap(got.get(nf), temporalConstraint);
+
+				}
+			}else{
+				if(firstRemovalKey==null){
+					firstRemovalKey = nf;
+				}else{
+					break;
+				}
+			}
+		}
+		if(firstRemovalKey!=null){
+			return got.subMap(got.firstKey(), firstRemovalKey);
+		}
+		return got;
+	}
+
+
 
 }
