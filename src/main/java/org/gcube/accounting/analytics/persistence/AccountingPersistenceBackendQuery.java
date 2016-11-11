@@ -168,6 +168,10 @@ public interface AccountingPersistenceBackendQuery {
 
 	
 	/**
+	 * 
+	 * getUsageValueQuota
+	 * use for a specifiy consumer id and for single quota
+	 * 
 	 * in:[{ "consumerId" : "alessandro.pieve" }, { "serviceClass" : "DataAccess" }, { "serviceName" : "CkanConnector" }], d=null, orderingProperty=null]
 	 * out:[{ "consumerId" : "alessandro.pieve" }, { "serviceClass" : "DataAccess" }, { "serviceName" : "CkanConnector" }], d=88.0, orderingProperty=operationCount]
 	 * @param clz 
@@ -181,22 +185,58 @@ public interface AccountingPersistenceBackendQuery {
 	 * @return
 	 * @throws Exception
 	 */
+	/*
 	public List<Filters> getUsageValueQuota(Class<? extends AggregatedRecord<?, ?>> clz,
 			TemporalConstraint temporalConstraint,
 			List<Filters> filterPackageQuota) throws Exception;
-
+*/
 	
 	/**
-	 * 
-	 * @param clz
-	 * @param temporalConstraint
+	 * getUsageValueQuotaTotal
+	 *
+	 * Example for crequire 2 different quota (lucio.lelii for service and alessandro.pieve for storage)
+	 *	Input:
+	 *	[
+	 *		TotalFilters [
+	 *			clz=class org.gcube.accounting.datamodel.aggregation.AggregatedServiceUsageRecord, 
+	 *			temporalConstraint=StartTime : 2015-05-01 11:42:34:515 UTC (1430480554515 millis), EndTime : 2016-11-09 11:42:34:515 UTC (1478691754515 millis), 	
+	 *			Aggregated DAILY, 
+	 *			totalFilters=[
+	 *				Filters [filters=[
+	 *							{ "consumerId" : "lucio.lelii" }, 
+	 *							{ "serviceClass" : "DataAccess" }, 
+	 *							{ "serviceName" : "CkanConnector" }
+	 *						], d=null, orderingProperty=null], 
+	 *				Filters [filters=[
+	 *							{ "consumerId" : "lucio.lelii" }, 
+	 *							{ "serviceClass" : "VREManagement" }
+	 *						], d=null, orderingProperty=null]
+	 *			], d=null, orderingProperty=null] 
+	 *	]
+	 *	Output:
+	 *	[
+	 *		TotalFilters [
+	 *			clz=class org.gcube.accounting.datamodel.aggregation.AggregatedServiceUsageRecord,
+	 *			temporalConstraint=StartTime : 2015-05-01 11:42:34:515 UTC (1430480554515 millis), EndTime : 2016-11-09 11:42:34:515 UTC (1478691754515 millis), 
+	 *			Aggregated DAILY, 
+	 *			totalFilters=[
+	 *				Filters [filters=[
+	 *							{ "consumerId" : "lucio.lelii" },
+	 *							{ "serviceClass" : "DataAccess" }, 
+	 *							{ "serviceName" : "CkanConnector" }
+	 *						], d=1.0, orderingProperty=operationCount], 
+	 *				Filters [filters=[
+	 *							{ "consumerId" : "lucio.lelii" }, 
+	 *							{ "serviceClass" : "VREManagement" }
+	 *						], d=1.0, orderingProperty=operationCount]
+	 *			], d=2.0, orderingProperty=null]
+	 *	]
 	 * @param listUsage
 	 * @return
 	 * @throws Exception
 	 */
 	public List<TotalFilters> getUsageValueQuotaTotal(
-			Class<? extends AggregatedRecord<?, ?>> clz,
-			TemporalConstraint temporalConstraint, List<TotalFilters> listUsage)
+			List<TotalFilters> listUsage)
 			throws Exception;
 
 	

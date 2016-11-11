@@ -286,23 +286,13 @@ public class AccountingPersistenceQuery implements AccountingPersistenceBackendQ
 				.getUsageValue(clz, temporalConstraint, applicant);
 	}
 
-	/*New task for quota*/
-	@Override
-	public List<Filters> getUsageValueQuota(Class<? extends AggregatedRecord<?, ?>> clz,
-			TemporalConstraint temporalConstraint, List<Filters> listUsage)
-					throws Exception {
-		
-		return AccountingPersistenceBackendQueryFactory.getInstance()
-				.getUsageValueQuota(clz, temporalConstraint, listUsage);
-	}
 
 	@Override
-	public List<TotalFilters> getUsageValueQuotaTotal(Class<? extends AggregatedRecord<?, ?>> clz,
-			TemporalConstraint temporalConstraint, List<TotalFilters> listUsage)
+	public List<TotalFilters> getUsageValueQuotaTotal( List<TotalFilters> listUsage)
 					throws Exception {
 		
 		return AccountingPersistenceBackendQueryFactory.getInstance()
-				.getUsageValueQuotaTotal(clz, temporalConstraint, listUsage);
+				.getUsageValueQuotaTotal(listUsage);
 	}
 
 
