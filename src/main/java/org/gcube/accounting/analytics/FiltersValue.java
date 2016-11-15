@@ -5,27 +5,27 @@ import java.util.List;
  * @author Alessandro Pieve (ISTI - CNR) alessandro.pieve@isti.cnr.it
  *
  */
-public class Filters {
+public class FiltersValue {
 
 	
 	protected List<Filter> filters;
 	protected Double d;
 	protected String orderingProperty;
 	
-	public Filters(){}
+	public FiltersValue(){}
 	
-	public Filters(List<Filter> filters, Number n, String orderingProperty) {
+	public FiltersValue(List<Filter> filters, Number n, String orderingProperty) {
 		super();
 		this.filters=filters;
 		this.d = n.doubleValue();
 		this.orderingProperty = orderingProperty;
 	}
 
-	public List<Filter> getFilters() {
+	public List<Filter> getFiltersValue() {
 		return filters;
 	}
 
-	public void setFilters(List<Filter> filters) {
+	public void setFiltersValue(List<Filter> filters) {
 		this.filters = filters;
 	}
 
@@ -65,7 +65,7 @@ public class Filters {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Filters other = (Filters) obj;
+		FiltersValue other = (FiltersValue) obj;
 		if (d == null) {
 			if (other.d != null)
 				return false;
@@ -86,8 +86,10 @@ public class Filters {
 
 	@Override
 	public String toString() {
-		return "Filters [filters=" + filters + ", d=" + d
+		return "FiltersValue [filters=" + filters + ", d=" + d
 				+ ", orderingProperty=" + orderingProperty + "]";
 	}
+
+
 	
 }

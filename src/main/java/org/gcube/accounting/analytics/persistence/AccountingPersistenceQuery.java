@@ -15,11 +15,10 @@ import java.util.TreeMap;
 import javax.activity.InvalidActivityException;
 
 import org.gcube.accounting.analytics.Filter;
-import org.gcube.accounting.analytics.Filters;
 import org.gcube.accounting.analytics.Info;
 import org.gcube.accounting.analytics.NumberedFilter;
 import org.gcube.accounting.analytics.TemporalConstraint;
-import org.gcube.accounting.analytics.TotalFilters;
+import org.gcube.accounting.analytics.UsageValue;
 import org.gcube.accounting.analytics.exception.DuplicatedKeyFilterException;
 import org.gcube.accounting.analytics.exception.KeyException;
 import org.gcube.accounting.analytics.exception.ValueException;
@@ -288,7 +287,7 @@ public class AccountingPersistenceQuery implements AccountingPersistenceBackendQ
 
 
 	@Override
-	public List<TotalFilters> getUsageValueQuotaTotal( List<TotalFilters> listUsage)
+	public List<UsageValue> getUsageValueQuotaTotal( List<UsageValue> listUsage)
 					throws Exception {
 		
 		return AccountingPersistenceBackendQueryFactory.getInstance()

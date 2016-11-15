@@ -14,11 +14,13 @@ distro/descriptor.xml -text
 distro/profile.xml -text
 /pom.xml -text
 src/main/java/org/gcube/accounting/analytics/Filter.java -text
-src/main/java/org/gcube/accounting/analytics/Filters.java -text
+src/main/java/org/gcube/accounting/analytics/FiltersValue.java -text
 src/main/java/org/gcube/accounting/analytics/Info.java -text
 src/main/java/org/gcube/accounting/analytics/NumberedFilter.java -text
 src/main/java/org/gcube/accounting/analytics/TemporalConstraint.java -text
-src/main/java/org/gcube/accounting/analytics/TotalFilters.java -text
+src/main/java/org/gcube/accounting/analytics/UsageServiceValue.java -text
+src/main/java/org/gcube/accounting/analytics/UsageStorageValue.java -text
+src/main/java/org/gcube/accounting/analytics/UsageValue.java -text
 src/main/java/org/gcube/accounting/analytics/exception/DuplicatedKeyFilterException.java -text
 src/main/java/org/gcube/accounting/analytics/exception/KeyException.java -text
 src/main/java/org/gcube/accounting/analytics/exception/NoAvailableScopeException.java -text

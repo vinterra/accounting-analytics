@@ -13,16 +13,13 @@ import java.util.SortedSet;
 import java.util.TimeZone;
 import java.util.TreeSet;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * @author Luca Frosini (ISTI - CNR)
  *
  */
 public class TemporalConstraint {
 	
-	private static final Logger logger = LoggerFactory.getLogger(TemporalConstraint.class);
+
 	
 	private static final String UTC_TIME_ZONE = "UTC";
 	

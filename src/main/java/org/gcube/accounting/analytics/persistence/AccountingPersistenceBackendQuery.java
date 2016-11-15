@@ -9,11 +9,10 @@ import java.util.SortedMap;
 import java.util.SortedSet;
 
 import org.gcube.accounting.analytics.Filter;
-import org.gcube.accounting.analytics.Filters;
 import org.gcube.accounting.analytics.Info;
 import org.gcube.accounting.analytics.NumberedFilter;
 import org.gcube.accounting.analytics.TemporalConstraint;
-import org.gcube.accounting.analytics.TotalFilters;
+import org.gcube.accounting.analytics.UsageValue;
 import org.gcube.accounting.analytics.exception.DuplicatedKeyFilterException;
 import org.gcube.accounting.analytics.exception.KeyException;
 import org.gcube.accounting.analytics.exception.ValueException;
@@ -235,8 +234,8 @@ public interface AccountingPersistenceBackendQuery {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<TotalFilters> getUsageValueQuotaTotal(
-			List<TotalFilters> listUsage)
+	public List<UsageValue> getUsageValueQuotaTotal(
+			List<UsageValue> listUsage)
 			throws Exception;
 
 	
