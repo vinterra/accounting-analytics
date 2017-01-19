@@ -9,15 +9,16 @@ import org.gcube.accounting.datamodel.AggregatedUsageRecord;
  *
  */
 public abstract class UsageValue {
+	
+	public UsageValue(){}
+	
 	protected Class<? extends AggregatedUsageRecord<?, ?>> clz;
-	protected TemporalConstraint temporalConstraint;		
-	//protected List<FiltersValue> filtersValue;
+	protected TemporalConstraint temporalConstraint;			
 	protected String identifier;
 	protected Double d;
 	protected String orderingProperty;
 	protected String context;
 	
-	public UsageValue(){}
 	public abstract Class<? extends AggregatedUsageRecord<?, ?>> getClz();
 	public abstract String getIdentifier();
 	public abstract Double getD();

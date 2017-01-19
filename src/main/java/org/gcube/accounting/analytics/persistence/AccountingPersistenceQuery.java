@@ -247,6 +247,17 @@ public class AccountingPersistenceQuery implements AccountingPersistenceBackendQ
 
 	}
 
+	
+	@Override
+	public SortedSet<NumberedFilter> getNextPossibleValuesWithMap(
+			Class<? extends AggregatedRecord<?, ?>> clz,
+			TemporalConstraint temporalConstraint, List<Filter> filters,
+			String key, String orderingProperty) throws Exception {
+		return AccountingPersistenceBackendQueryFactory.getInstance()
+				.getNextPossibleValuesWithMap(clz, temporalConstraint, filters, 
+						key, orderingProperty);
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -337,6 +348,8 @@ public class AccountingPersistenceQuery implements AccountingPersistenceBackendQ
 		}
 		return got;
 	}
+	
+	
 
 
 

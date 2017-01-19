@@ -115,6 +115,23 @@ public interface AccountingPersistenceBackendQuery {
 					String key, String orderingProperty) throws 
 					DuplicatedKeyFilterException, KeyException, ValueException, 
 					Exception;
+	
+	
+
+	/**
+	 * Same method but use if possible a map-reduce
+	 * @param clz
+	 * @param temporalConstraint
+	 * @param filters
+	 * @param key
+	 * @param orderingProperty
+	 * @return
+	 * @throws Exception
+	 */
+	public SortedSet<NumberedFilter> getNextPossibleValuesWithMap(
+			Class<? extends AggregatedRecord<?, ?>> clz,
+			TemporalConstraint temporalConstraint, List<Filter> filters,
+			String key, String orderingProperty) throws Exception;
 
 	/**
 	 * Close the connection to persistence
@@ -251,5 +268,7 @@ public interface AccountingPersistenceBackendQuery {
 			Class<? extends AggregatedRecord<?, ?>> clz,
 			TemporalConstraint temporalConstraint, List<Filter> filters,List<String> contexts)
 			throws Exception;
+
+	
 
 }

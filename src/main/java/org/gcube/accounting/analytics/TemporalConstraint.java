@@ -31,6 +31,7 @@ public class TemporalConstraint {
 	 */
 	public enum AggregationMode {
 		YEARLY, MONTHLY, DAILY, HOURLY, MINUTELY, SECONDLY, MILLISECONDLY  
+		
 	}
 	
 	/**
@@ -39,6 +40,7 @@ public class TemporalConstraint {
 	 * @author Luca Frosini (ISTI - CNR)
 	 */
 	public enum CalendarEnum {
+		
 		YEAR(Calendar.YEAR),
 		MONTH(Calendar.MONTH),
 		DAY(Calendar.DAY_OF_MONTH),
