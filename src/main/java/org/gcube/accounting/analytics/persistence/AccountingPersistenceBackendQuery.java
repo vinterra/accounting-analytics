@@ -61,6 +61,35 @@ public interface AccountingPersistenceBackendQuery {
 
 
 
+	/**
+	 * Query the persistence obtaining a Map where the date is the key and the 
+	 * #Info is the value. The result is relative to an Usage Record Type,
+	 * respect a TemporalConstraint and can be applied one or more filters.
+	 * Used for no context call
+	 * 
+	 * @param clz
+	 *            the Record Class of interest
+	 * @param temporalConstraint
+	 *            the TemporalConstraint (interval and aggregation)
+	 * @param filters
+	 *            list of filter to obtain the time series. If null or empty
+	 *            list get all data for the interested Record Class with the
+	 *            applying temporal constraint. All Filter must have not null
+	 *            and not empty key and value. The filters are must be related
+	 *            to different keys and are in AND. If the list contains more
+	 *            than one filter with the same key an Exception is thrown.
+	 * @return the Map containing for each date in the required interval the
+	 *         requested data
+	 * @throws DuplicatedKeyFilterException
+	 * @throws KeyException
+	 * @throws ValueException
+	 * @throws Exception
+	 */
+	public SortedMap<Calendar, Info> getNoContextTimeSeries(
+			Class<? extends AggregatedRecord<?, ?>> clz,
+					TemporalConstraint temporalConstraint, List<Filter> filters)
+							throws DuplicatedKeyFilterException, KeyException, ValueException,
+							Exception;
 
 	/**
 	 * Return a SortedMap containing the TimeSeries for top values for a certain
@@ -270,5 +299,5 @@ public interface AccountingPersistenceBackendQuery {
 			throws Exception;
 
 	
-
+	
 }

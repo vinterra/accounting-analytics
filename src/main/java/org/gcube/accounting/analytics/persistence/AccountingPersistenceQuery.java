@@ -149,6 +149,42 @@ public class AccountingPersistenceQuery implements AccountingPersistenceBackendQ
 
 		return ret;
 	}
+	
+	
+	
+	public SortedMap<Calendar, Info> getNoContextTimeSeries(
+			Class<? extends AggregatedRecord<?,?>> clz,
+					TemporalConstraint temporalConstraint, List<Filter> filters) 
+							throws DuplicatedKeyFilterException, KeyException, ValueException, 
+							Exception {
+
+		return this.getNoContextTimeSeries(clz, temporalConstraint, filters, false);
+	}
+
+	public SortedMap<Calendar, Info> getNoContextTimeSeries(
+			Class<? extends AggregatedRecord<?,?>> clz,
+					TemporalConstraint temporalConstraint, List<Filter> filters, 
+					boolean pad) throws DuplicatedKeyFilterException, KeyException, 
+					ValueException, Exception {
+		SortedMap<Calendar, Info> ret = 
+				AccountingPersistenceBackendQueryFactory.getInstance()
+				.getNoContextTimeSeries(clz, temporalConstraint, 
+						filters);
+
+		if(ret==null){
+			ret = new TreeMap<>();
+		}
+
+
+		if(pad){
+			ret = padMap(ret, temporalConstraint);
+		}
+
+		return ret;
+	}
+	
+	
+	
 
 	public SortedMap<NumberedFilter, SortedMap<Calendar, Info>> getTopValues(
 			Class<? extends AggregatedRecord<?, ?>> clz,
@@ -348,6 +384,8 @@ public class AccountingPersistenceQuery implements AccountingPersistenceBackendQ
 		}
 		return got;
 	}
+
+	
 	
 	
 
