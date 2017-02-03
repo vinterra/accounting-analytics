@@ -9,7 +9,11 @@ public class UsageServiceValue extends UsageValue {
 
 	protected Class<? extends AggregatedUsageRecord<?, ?>> clz;
 	protected TemporalConstraint temporalConstraint;		
-	protected List<FiltersValue> filtersValue;
+	
+	//USED for a list service for each identifier (package service )
+	//protected List<FiltersValue> filtersValue;
+	
+	protected List<Filter> filters;
 	protected String identifier;
 	protected Double d;
 	protected String orderingProperty;
@@ -57,22 +61,21 @@ public class UsageServiceValue extends UsageValue {
 
 	public UsageServiceValue(){}
 
-	public UsageServiceValue(String context,String identifier,Class<? extends AggregatedUsageRecord<?, ?>> clz,TemporalConstraint temporalConstraint,List<FiltersValue> filtersValue){
+	public UsageServiceValue(String context,String identifier,Class<? extends AggregatedUsageRecord<?, ?>> clz,TemporalConstraint temporalConstraint,List<Filter> filters){
 		super();
 		this.context=context;
-		this.filtersValue=filtersValue;
+		this.filters=filters;
 		this.clz=clz;
 		this.temporalConstraint=temporalConstraint;
 		this.identifier=identifier;
 
 	}
 
-	public List<FiltersValue> getFiltersValue() {
-		return filtersValue;
+	public List<Filter> getFilters() {
+		return filters;
 	}
-
-	public void setFiltersValue(List<FiltersValue> filtersValue) {
-		this.filtersValue = filtersValue;
+	public void setFilters(List<Filter> filters) {
+		this.filters = filters;
 	}
 	
 	@Override
@@ -87,12 +90,11 @@ public class UsageServiceValue extends UsageValue {
 	@Override
 	public String toString() {
 		return "UsageServiceValue [clz=" + clz + ", temporalConstraint="
-				+ temporalConstraint + ", filtersValue=" + filtersValue
-				+ ", identifier=" + identifier + ", d=" + d
-				+ ", orderingProperty=" + orderingProperty + ", context="
-				+ context + "]";
+				+ temporalConstraint + ", filters=" + filters + ", identifier="
+				+ identifier + ", d=" + d + ", orderingProperty="
+				+ orderingProperty + "]";
 	}
-
+	
 
 
 }
